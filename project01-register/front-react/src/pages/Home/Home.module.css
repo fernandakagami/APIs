@@ -1,0 +1,33 @@
+.container {    
+    width: 1200px;
+    margin: 150px auto 0;
+}
+
+.title {
+    text-align: center;
+}
+
+.table {
+    margin: 0 auto;
+}
+
+.titleColumn {
+    text-align: left;
+}
+
+.edit {
+    background-color: lightblue;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+.delete {
+    background-color: lightcoral;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px;
+    cursor: pointer;
+}
