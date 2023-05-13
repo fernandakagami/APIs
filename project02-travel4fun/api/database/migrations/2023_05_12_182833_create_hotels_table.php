@@ -21,9 +21,10 @@ return new class extends Migration
             $table->longtext('address');
             $table->string('name');
             $table->text('short_description');
-            $table->json('photos');
+            $table->text('photos');
             $table->decimal('stars', 3, 2);
-            $table->json('amenities');  
+            $table->text('amenities');
+            $table->string('category');
             $table->timestamps();
         });
     }
