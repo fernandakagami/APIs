@@ -5,13 +5,18 @@
 <template>
   <header>
     <div class="container is-max-desktop header-container">
-      <div class="is-flex is-justify-content-space-between">
+      <div class="is-flex is-justify-content-space-between header-content">
         <div class="title-container">
           <img src="../assets/logo.png" alt="logo" class="logo" />
           <h3 class="title"> Discover all the place around the work with <em>Sunday</em></h3>
         </div>
-        <div class="image-container">
-          <img src="../assets/telainicial.jpg" alt="travel" class="inicial-image">
+        <div class="image-container is-flex is-justify-content-flex-end">
+          <router-link to="/owner" class="mt-5 mr-5 login-container">
+            <span class="icon is-small">
+              <i class="fas fa-user"></i>
+            </span>
+            Login
+          </router-link>
         </div>
       </div>
     </div>
@@ -40,7 +45,6 @@
         </div>
       </form>
     </section>
-
     <section class="pt-6 container is-max-desktop">
       <h3 class="pt-5 is-size-3 mb-4">Choose the category</h3>
       <ul class="container is-flex is-flex-direction-row is-justify-content-space-between">
@@ -49,28 +53,28 @@
             <div class="countryside-category">
             </div>
             <h4 class="is-size-5 has-text-centered mt-1">Countryside</h4>
-          </a>          
+          </a>
         </li>
         <li class="category-container">
           <a>
             <div class="beach-category">
             </div>
             <h4 class="is-size-5 has-text-centered mt-1">Beach</h4>
-          </a>          
+          </a>
         </li>
         <li class="category-container">
           <a>
             <div class="city-category">
             </div>
             <h4 class="is-size-5 has-text-centered mt-1">City</h4>
-          </a>          
+          </a>
         </li>
         <li class="category-container">
           <a>
             <div class="resort-category">
             </div>
             <h4 class="is-size-5 has-text-centered mt-1">Resort</h4>
-          </a>          
+          </a>
         </li>
       </ul>
     </section>
@@ -81,16 +85,17 @@
 <style scoped>
 header {
   background-color: #003b95;
-  max-height: 450px;
-
 }
 
 .header-container {
   position: relative;
 }
 
+.header-content {
+  height: 450px;
+}
+
 .title-container {
-  max-width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -101,23 +106,32 @@ header {
 }
 
 .title {
-  margin-bottom: 150px;
   color: white;
   font-size: 50px;
   font-weight: 400;
+  margin-bottom: 80px;
 }
 
 .image-container {
+  margin-left: 50px;
+  background-image: url('../assets/telainicial.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left top;
   max-height: 450px;
-  max-width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  width: 100%;
 }
 
 .inicial-image {
   max-height: 100%;
   max-width: 100%;
+}
+
+.login-container {
+  color: white;
+  border: 2px solid white;
+  height: 28px;
+  padding: 0 20px;
 }
 
 .form-container {
@@ -171,7 +185,14 @@ header {
   border-radius: 5px;
 }
 
-a, a:active, a:hover {
+a,
+a:active {
   color: var(--vt-c-black-mute);
+}
+
+a:hover {
+  color: var(--vt-c-black-mute);
+  filter:
+    drop-shadow(4px 4px 5px #999999);
 }
 </style>

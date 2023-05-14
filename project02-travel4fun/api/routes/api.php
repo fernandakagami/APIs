@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\OwnerController;
 
 
 /*
@@ -21,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('/hotels', HotelController::class);
+
+Route::resource('/owners', OwnerController::class);
