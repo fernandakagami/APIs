@@ -20,8 +20,7 @@ class OwnerController extends Controller
 
     public function show(int $id)
     {
-        $owner = Owner::findOrFail($id);
-        
+        $owner = Owner::findOrFail($id);        
         return $owner;
     }
 
@@ -31,7 +30,6 @@ class OwnerController extends Controller
 
         $owner->fill($request->all());
         $owner->save();
-
         return "Hotel owner updated";
     }
 

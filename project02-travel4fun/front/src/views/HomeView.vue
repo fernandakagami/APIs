@@ -1,5 +1,21 @@
-<script setup>
+<script type="module">
+import LoginModal from '../components/LoginModal.vue';
 
+export default {
+  components: {
+    LoginModal,
+  },
+  data() {
+    return {
+      activeClass: ''
+    }
+  },
+  methods: {
+    showModal() {
+      this.activeClass = this.activeClass ? '' : 'is-active'
+    }
+  }
+}
 </script>
 
 <template>
@@ -11,12 +27,15 @@
           <h3 class="title"> Discover all the place around the work with <em>Sunday</em></h3>
         </div>
         <div class="image-container is-flex is-justify-content-flex-end">
-          <router-link to="/owner" class="mt-5 mr-5 login-container">
+          <button class="js-modal-trigger mt-5 mr-2 contact-container">
+            Contact Us
+          </button>
+          <button class="js-modal-trigger mt-5 mr-5 login-container" data-target="modal-js-example" @click="showModal">
             <span class="icon is-small">
               <i class="fas fa-user"></i>
             </span>
             Login
-          </router-link>
+          </button>
         </div>
       </div>
     </div>
@@ -47,7 +66,7 @@
     </section>
     <section class="pt-6 container is-max-desktop">
       <h3 class="pt-5 is-size-3 mb-4">Choose the category</h3>
-      <ul class="container is-flex is-flex-direction-row is-justify-content-space-between">
+      <ul class="is-flex is-flex-direction-row is-justify-content-space-between">
         <li class="category-container">
           <a>
             <div class="countryside-category">
@@ -78,8 +97,11 @@
         </li>
       </ul>
     </section>
-
   </main>
+
+  <div :class="['modal', activeClass]">
+    <LoginModal :showModal="closeModal" />
+  </div>
 </template>
 
 <style scoped>
@@ -117,7 +139,8 @@ header {
   background-image: url('../assets/telainicial.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: left top;
+  background-position: center;
+  opacity: 0.9;
   max-height: 450px;
   width: 100%;
 }
@@ -127,11 +150,34 @@ header {
   max-width: 100%;
 }
 
+.contact-container {
+  color: #003b95;
+  border: 1px solid white;
+  height: 40px;
+  padding: 3px 20px 5px;
+  font-size: 20px;
+  background-color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.contact-container:hover {
+  background-color: rgb(238, 238, 238);
+  border: 1px solid rgb(238, 238, 238);
+}
+
 .login-container {
   color: white;
-  border: 2px solid white;
-  height: 28px;
-  padding: 0 20px;
+  border: 1px solid white;
+  height: 40px;
+  padding: 3px 30px 5px;
+  font-size: 20px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.login-container:hover {
+  background-color: #003b95;
 }
 
 .form-container {
