@@ -7,14 +7,14 @@ use App\Models\Hotel;
 
 class HotelController extends Controller
 {
-    public function index()
-    {
-        return Hotel::all();
+    public function index(Request $request)
+    {        
+        return Hotel::where('user_id', $request->user()->id)->get();
     }
 
     public function store(Request $request)
     {
-        Hotel::create($request->except('_token'));
+        dd($request);        
         return 'Hotel included.';
     }
 

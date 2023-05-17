@@ -1,4 +1,5 @@
 <script>
+import axios from "axios";
 
 export default {
   props: ['showModal'],
@@ -7,9 +8,22 @@ export default {
       this.$parent.showModal();
     },
     login() {
-      
+      axios.post('http://127.0.0.1:8000/api/login',
+        {
+          email: this.email,
+          password: this.password
+        }
+      )
+        .then((response) => {
+          localStorage.token = response.data.api_token;          
+          if (localStorage) {
+            this.$router.push({
+              path: '/dashboard'
+            })
+          }
+        })
+        .catch((error) => console.log(error))
     }
-
   }
 }
 </script>
@@ -19,17 +33,17 @@ export default {
   <div class="modal-content">
     <div class="box px-6">
       <h2 class="my-4 has-text-centered is-size-3">Login</h2>
-      <form>
+      <form @submit.prevent="login">
         <div class="field">
           <label class="label">Email</label>
           <div class="control">
-            <input class="input" type="email">
+            <input class="input" type="email" v-model="email">
           </div>
         </div>
         <div class="field">
           <label class="label">Password</label>
           <div class="control">
-            <input class="input" type="password">
+            <input class="input" type="password" v-model="password">
           </div>
         </div>
         <div class="field mt-5 is-grouped is-grouped-centered">
@@ -38,9 +52,9 @@ export default {
           </div>
         </div>
       </form>
-      <div>New account?  <router-link to="/owner">Sign up</router-link></div>
-    </div>    
-  </div>  
+      <div>New account? <router-link to="/ownercreate">Sign up</router-link></div>
+    </div>
+  </div>
   <button class="modal-close is-large" aria-label="close" @click='closeModal'></button>
 </template>
 

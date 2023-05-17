@@ -25,7 +25,7 @@ return new class extends Migration
             $table->decimal('stars', 3, 2);
             $table->text('amenities');
             $table->string('category');
-            $table->foreignId('owners_id')->constrained()->onDelete('cascade');
+            $table->foreignId('users_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

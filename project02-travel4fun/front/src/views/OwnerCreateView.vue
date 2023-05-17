@@ -5,16 +5,18 @@ export default {
   methods: {
     register() {
       axios
-        .post('http://127.0.0.1:8000/api/owners',
+        .post('http://127.0.0.1:8000/api/user',
           {
             name: this.name,
             email: this.email,
-            password: this.password
+            password: this.password,
+            password_confirmation: this.confirmationPassword,
+            role: "owner"
           }
         )
-      .catch((error)=> {
-        console.log(error)
-      })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 }
@@ -51,7 +53,7 @@ export default {
         <div class="field">
           <label class="label">Confirmation password</label>
           <div class="control">
-            <input class="input" type="password">
+            <input class="input" type="password" v-model="confirmationPassword">
           </div>
         </div>
       </div>
@@ -72,5 +74,4 @@ header {
 header img {
   width: 100px;
 }
-
 </style>

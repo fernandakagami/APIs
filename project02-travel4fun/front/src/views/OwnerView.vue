@@ -2,221 +2,199 @@
 import LoginModal from '../components/LoginModal.vue';
 
 export default {
-  components: {
-    LoginModal,
-  },
-  data() {
-    return {
-      activeClass: ''
+    components: {
+        LoginModal,
+    },
+    data() {
+        return {
+            activeClass: ''
+        }
+    },
+    methods: {
+        showModal() {
+            this.activeClass = this.activeClass ? '' : 'is-active'
+        }
     }
-  },
-  methods: {
-    showModal() {
-      this.activeClass = this.activeClass ? '' : 'is-active'
-    }
-  }
 }
 </script>
 
 <template>
-  <header>
-    <div class="container is-max-desktop header-container">
-      <div class="is-flex is-justify-content-space-between header-content">
-        <div class="title-container">
-          <img src="../assets/logo.png" alt="logo" class="logo" />
-          <h3 class="title"> Discover all the place around the work with <em>Sunday</em></h3>
+    <header>
+        <div class="container is-max-desktop">
+            <div class="is-flex is-justify-content-space-between is-align-items-center header-content">
+                <div>
+                    <img src="../assets/logo.png" alt="logo" class="logo" />
+                </div>
+                <div class="is-flex is-justify-content-flex-end is-align-items-center">
+                    <p class="login-title">Already a partner?</p>
+                    <button class="js-modal-trigger login-button" data-target="modal-js-example" @click="showModal">
+                        <span class="icon is-small">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        Login
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="image-container is-flex is-justify-content-flex-end">
-          <button class="js-modal-trigger mt-5 mr-2 contact-container">
-            Contact Us
-          </button>
-          <button class="js-modal-trigger mt-5 mr-5 login-container" data-target="modal-js-example" @click="showModal">
-            <span class="icon is-small">
-              <i class="fas fa-user"></i>
-            </span>
-            Login
-          </button>
-        </div>
-      </div>
+    </header>
+
+    <main>
+        <section class="section-one">
+            <section class="container is-max-desktop is-flex is-justify-content-space-between is-align-items-center section-one-container">
+                <section class="is-flex is-justify-content-center is-flex-direction-column section-container-one">
+                    <h3 class="section-container-one-title">Register in <em>Sunday</em> and increase your client rate now!!!
+                    </h3>
+                    <p class="section-container-one-text">The register is free and take only 15 minutes</p>
+                </section>
+                <section class="is-flex is-justify-content-flex-end section-container-two">
+                    <div class="box">
+                        <h3 class="section-container-two-title">Create a new register</h3>
+                        <p class="section-container-two-text">Create a partner account to begin</p>
+                        <button class="section-container-two-button">
+                            <router-link to="/ownercreate">Begin -></router-link>
+                        </button>
+                        <div
+                            class="is-flex is-justify-space-between is-align-items-center is-flex-direction-row section-container-two-login">
+                            <p>Already register?</p>
+                            <a @click="showModal">Login</a>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+        <section class="container is-max-desktop is-flex is-justify-content-center is-align-items-center section-two">
+            <button class="button is-large px-6 button-contact-us">Contact Us</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>© Copyright Fernanda-2023</p>
+    </footer>
+
+    <div :class="['modal', activeClass]">
+        <LoginModal :showModal="closeModal" />
     </div>
-  </header>
-
-  <main>    
-    <section class="pt-6 container is-max-desktop">
-      <h3 class="pt-5 is-size-3 mb-4">Choose the category</h3>
-      <ul class="is-flex is-flex-direction-row is-justify-content-space-between">
-        <li class="category-container">
-          <a>
-            <div class="countryside-category">
-            </div>
-            <h4 class="is-size-5 has-text-centered mt-1">Countryside</h4>
-          </a>
-        </li>
-        <li class="category-container">
-          <a>
-            <div class="beach-category">
-            </div>
-            <h4 class="is-size-5 has-text-centered mt-1">Beach</h4>
-          </a>
-        </li>
-        <li class="category-container">
-          <a>
-            <div class="city-category">
-            </div>
-            <h4 class="is-size-5 has-text-centered mt-1">City</h4>
-          </a>
-        </li>
-        <li class="category-container">
-          <a>
-            <div class="resort-category">
-            </div>
-            <h4 class="is-size-5 has-text-centered mt-1">Resort</h4>
-          </a>
-        </li>
-      </ul>
-    </section>
-  </main>
-
-  <div :class="['modal', activeClass]">
-    <LoginModal :showModal="closeModal" />
-  </div>
 </template>
 
 <style scoped>
 header {
-  background-color: #003b95;
-}
-
-.header-container {
-  position: relative;
+    background-color: #003b95;
 }
 
 .header-content {
-  height: 450px;
-}
-
-.title-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    height: 100px;
 }
 
 .logo {
-  width: 100px;
+    width: 100px;
 }
 
-.title {
-  color: white;
-  font-size: 50px;
-  font-weight: 400;
-  margin-bottom: 80px;
+.login-title {
+    color: white;
+    margin-right: 20px;
 }
 
-.image-container {
-  margin-left: 50px;
-  background-image: url('../assets/telainicial.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0.9;
-  max-height: 450px;
-  width: 100%;
+.login-button {
+    color: white;
+    border: 1px solid white;
+    padding: 3px 30px 5px;
+    font-size: 20px;
+    background-color: transparent;
+    cursor: pointer;
 }
 
-.inicial-image {
-  max-height: 100%;
-  max-width: 100%;
+main {
+    height: calc(100vh - 100px);
 }
 
-.contact-container {
-  color: #003b95;
-  border: 1px solid white;
-  height: 40px;
-  padding: 3px 20px 5px;
-  font-size: 20px;
-  background-color: white;
-  border-radius: 3px;
-  cursor: pointer;
+.section-one {
+    background-color: #003b95;
+    height: 50%;
 }
 
-.contact-container:hover {
-  background-color: rgb(238, 238, 238);
-  border: 1px solid rgb(238, 238, 238);
+.section-one-container {
+    height: 100%;
 }
 
-.login-container {
-  color: white;
-  border: 1px solid white;
-  height: 40px;
-  padding: 3px 30px 5px;
-  font-size: 20px;
-  background-color: transparent;
-  cursor: pointer;
+.section-container-one {
+    width: 120%;
+    color: white;
 }
 
-.login-container:hover {
-  background-color: #003b95;
+.section-container-one-title {
+    font-size: 50px;
+    line-height: 1.2;
 }
 
-.form-container {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -40px);
+em {
+    color: rgb(247, 54, 93);
+    font-weight: 800;
 }
 
-.form-content {
-  width: 100%;
+.section-container-one-text {
+    font-size: 25px;
+    margin-top: 20px;
 }
 
-.category-container {
-  width: 23%;
-  height: 350px;
+.section-container-two {
+    width: 80%;
 }
 
-.countryside-category {
-  background-image: url('../assets/campo.jpg');
-  height: 90%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 5px;
+.section-container-two-title {
+    font-size: 25px;
+    text-align: start;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-.beach-category {
-  background-image: url('../assets/praia.jpg');
-  height: 90%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 5px;
+.section-container-two-text {
+    font-size: 15px;
+    text-align: start;
+    margin-bottom: 5px;
 }
 
-.city-category {
-  background-image: url('../assets/city.jpg');
-  height: 90%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 5px;
+.section-container-two-button {
+    font-size: 18px;
+    width: 100%;
+    background-color: #003b95;
+    border: none;
+    padding: 8px 0;
+    margin-bottom: 20px;
+    cursor: pointer;
 }
 
-.resort-category {
-  background-image: url('../assets/resort.jpg');
-  height: 90%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 5px;
+.section-container-two-button a {
+    color: white;
 }
 
-a,
-a:active {
-  color: var(--vt-c-black-mute);
+.section-container-two-login p {
+    font-size: 13px;
+    margin-right: 5px;
 }
 
-a:hover {
-  color: var(--vt-c-black-mute);
-  filter:
-    drop-shadow(4px 4px 5px #999999);
+.section-container-two-login a {
+    font-size: 13px;
+}
+
+.section-two {
+    height: 50%;
+}
+
+.button-contact-us {
+    background-color: #003b95;
+    color: white;
+    border-radius: 6px;
+}
+
+footer {
+    background-color: #003b95;
+    color: white;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 300;
 }
 </style>

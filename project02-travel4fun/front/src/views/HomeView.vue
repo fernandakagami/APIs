@@ -24,7 +24,7 @@ export default {
       <div class="is-flex is-justify-content-space-between header-content">
         <div class="title-container">
           <img src="../assets/logo.png" alt="logo" class="logo" />
-          <h3 class="title"> Discover all the place around the work with <em>Sunday</em></h3>
+          <h3 class="title"> Discover all the place around the world with <em>Sunday</em></h3>
         </div>
         <div class="image-container is-flex is-justify-content-flex-end">
           <button class="js-modal-trigger mt-5 mr-2 contact-container">

@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HotelController;
-use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -18,23 +19,15 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('/hotel', HotelController::class);       
+    Route::post('/logout', [LoginController::class, 'logout']);
 });
 
-Route::resource('/hotels', HotelController::class);
+Route::resource('/user', UserController::class);
+Route::post('/login', [LoginController::class, 'login']); 
 
-Route::resource('/owners', OwnerController::class);
-
-Route::post('/login', function(Request $request) {
-    $credentials = $request->only(['email', 'password']);
-    if (Auth::attempt($credentials) === false) {
-        return response()->json('Unauthorized', 401);
-    }
-
-    $owner = Auth::owner();
-    $owner->tokens()->delete();
-    $token = $owner->createToken('token');
-
-    return response()->json($token->plainTextToken);
-});
