@@ -33,8 +33,8 @@ class HotelController extends Controller
         return 'Hotel included.';
     }
 
-    public function show(int $id)
-    {
+    public function show(int $id, Request $request)
+    {        
         $hotel = Hotel::findOrFail($id);
         
         return $hotel;

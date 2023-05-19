@@ -49,9 +49,7 @@ export default {
                                 <router-link to="/hotelcreate">Register New Hotel</router-link>
                             </li>
                             <li>
-                                <a>
-                                    Update Account
-                                </a>
+                                <router-link to="/ownerupdate">Update User</router-link>
                             </li>
                             <li>
                                 <a>
@@ -65,7 +63,7 @@ export default {
                     <div class="box">
                         <ul class="mt-5">
                             <li v-for="hotel in this.hotels" class="box mb-5">
-                                <router-link to="/dashboard" class="columns">
+                                <router-link :to="{ name: 'hotelshow', params: { id: hotel.id } }" class="columns">
                                     <section class="column is-one-third">
                                         <div class="hotel-image" :style="{ backgroundImage: `url(${hotel.photos})` }"></div>
                                     </section>
@@ -80,7 +78,7 @@ export default {
                                             <p class="is-size-6">{{ hotel.short_description }}</p>
                                         </div>
                                         <div class="is-flex is-justify-content-flex-end is-align-items-center">
-                                            <button class="button is-info">Available</button>
+                                            <button class="button is-info">Update Hotel</button>
                                         </div>
                                     </section>
                                 </router-link>
