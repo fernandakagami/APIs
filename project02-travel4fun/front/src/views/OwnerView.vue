@@ -1,9 +1,11 @@
 <script type="module">
 import LoginModal from '../components/LoginModal.vue';
+import Footer from '../components/Owner/FooterPage.vue';
 
 export default {
     components: {
         LoginModal,
+        Footer,
     },
     data() {
         return {
@@ -39,7 +41,7 @@ export default {
     </header>
 
     <main>
-        <section class="section-one">
+        <section class="section-one is-flex is-justify-content-space-between is-align-items-center">
             <section class="container is-max-desktop is-flex is-justify-content-space-between is-align-items-center section-one-container">
                 <section class="is-flex is-justify-content-center is-flex-direction-column section-container-one">
                     <h3 class="section-container-one-title">Register in <em>Sunday</em> and increase your client rate now!!!
@@ -62,14 +64,15 @@ export default {
                 </section>
             </section>
         </section>
-        <section class="container is-max-desktop is-flex is-justify-content-center is-align-items-center section-two">
-            <button class="button is-large px-6 button-contact-us">Contact Us</button>
+        <section class="section-two">
+            <div class="is-flex is-justify-content-center is-align-items-center container is-max-desktop">
+                <button class="button is-large px-6 button-contact-us">Contact Us</button>
+            </div>
+            
         </section>
     </main>
 
-    <footer>
-        <p>© Copyright Fernanda-2023</p>
-    </footer>
+    <Footer></Footer>
 
     <div :class="['modal', activeClass]">
         <LoginModal :showModal="closeModal" />
@@ -103,17 +106,13 @@ header {
     cursor: pointer;
 }
 
-main {
-    height: calc(100vh - 100px);
-}
-
 .section-one {
     background-color: #003b95;
-    height: 50%;
+    height: 50vh;
 }
 
 .section-one-container {
-    height: 100%;
+    max-height: 100%;
 }
 
 .section-container-one {
@@ -184,17 +183,5 @@ em {
     background-color: #003b95;
     color: white;
     border-radius: 6px;
-}
-
-footer {
-    background-color: #003b95;
-    color: white;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 300;
 }
 </style>

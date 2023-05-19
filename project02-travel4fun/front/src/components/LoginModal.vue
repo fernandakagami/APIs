@@ -15,12 +15,10 @@ export default {
         }
       )
         .then((response) => {
-          localStorage.token = response.data.api_token;          
-          if (localStorage) {
-            this.$router.push({
-              path: '/dashboard'
-            })
-          }
+          localStorage.token = response.data.api_token;
+          this.$router.push({
+            path: '/dashboard'
+          })
         })
         .catch((error) => console.log(error))
     }

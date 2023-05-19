@@ -7,12 +7,12 @@ export default {
       axios
         .post(
           'http://127.0.0.1:8000/api/logout',
-          { api_token: '4|miQLVuKpcydjZRnIU2XFnXlWLCXPWF20spKEb8sv' },
+          { api_token: localStorage.token },
           {
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',
-              Authorization: "Bearer " + localStorage.getItem("token")
+              Authorization: "Bearer " + localStorage.token
             }
           })
         .then((response) => {

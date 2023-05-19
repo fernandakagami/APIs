@@ -1,7 +1,7 @@
 <script>
+import axios from "axios";
 import Header from "../../components/Owner/HeaderPage.vue";
 import Footer from "../../components/Owner/FooterPage.vue";
-import axios from "axios";
 
 export default {
     components: {
@@ -48,10 +48,11 @@ export default {
 <template>
     <Header></Header>
 
-    <main>
+    <main>        
         <div class="container is-max-desktop">
+            <router-link to="/dashboard" class="button mt-5">Return</router-link>
             <form @submit.prevent="register">
-                <h1 class="has-text-centered is-size-3 has-text-weight-bold mt-5">Register a Hotel</h1>
+                <h1 class="has-text-centered is-size-3 has-text-weight-bold mt-3">Register a Hotel</h1>
                 <div class="field">
                     <label class="label">Name</label>
                     <div class="control">
@@ -131,7 +132,7 @@ export default {
                     </div>
                 </div>
 
-                <div class="field mt-5 is-grouped is-grouped-centered">
+                <div class="field my-6 is-grouped is-grouped-centered">
                     <div class="control">
                         <button type="submit" class="button is-info px-6">Register</button>
                     </div>
@@ -144,7 +145,4 @@ export default {
 </template>
 
 <style scoped>
-main {
-    height: calc(100vh - 100px);
-}
 </style>

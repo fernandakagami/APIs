@@ -9,12 +9,27 @@ class HotelController extends Controller
 {
     public function index(Request $request)
     {        
-        return Hotel::where('user_id', $request->user()->id)->get();
+        return Hotel::where('users_id', $request->user()->id)->get();
     }
 
     public function store(Request $request)
     {
-        dd($request);        
+        $hotel = new Hotel;
+        $hotel->description = $request->input('description');
+        $hotel->postal_code = $request->input('postal_code');
+        $hotel->country_name = $request->input('country_name');
+        $hotel->region_name = $request->input('region_name');
+        $hotel->city = $request->input('city');
+        $hotel->address = $request->input('address');
+        $hotel->name = $request->input('name');
+        $hotel->short_description = $request->input('short_description');
+        $hotel->photos = $request->input('photos');
+        $hotel->stars = $request->input('stars');
+        $hotel->amenities = $request->input('amenities');
+        $hotel->category = $request->input('category');
+        $hotel->users_id = $request->user()->id;        
+        $hotel->save();
+
         return 'Hotel included.';
     }
 
