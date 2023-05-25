@@ -32,32 +32,30 @@ class UserController extends Controller
         $request['remember_token'] = Str::random(10);
         
         $user = User::create($request->toArray());        
-        $token = $user->createToken('api_token')->plainTextToken;
-        $user->api_token = $token;
-        $user->save();
+        $token = $user->createToken('api_token')->plainTextToken;        
 
         $response = ['api_token' => $token];        
         return response($response, 200);
     }
 
-    public function show(int $id)
-    {
-        $user = User::findOrFail($id);        
+    public function show()
+    {        
+        $user = User::findOrFail(auth('sanctum')->user()->id);        
         return $user;
     }
 
-    public function update(Request $request, int $id)
+    public function update(Request $request)
     {
-        $user = User::findOrFail($id);
+        $user = User::findOrFail(auth('sanctum')->user()->id);
 
         $user->fill($request->all());
         $user->save();
         return "User updated";
     }
 
-    public function destroy(int $id)
+    public function destroy()
     {
-        User::destroy($id);
+        User::destroy(auth('sanctum')->user()->id);
         return 'User removed';
     }
 }

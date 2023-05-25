@@ -23,7 +23,7 @@ export default {
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
-                        Authorization: "Bearer " + localStorage.token
+                        Authorization: "Bearer " + this.$store.state.token
                     }
                 }
             )
@@ -49,7 +49,7 @@ export default {
                                 <router-link to="/hotelcreate">Register New Hotel</router-link>
                             </li>
                             <li>
-                                <router-link to="/ownerupdate">Update User</router-link>
+                                <router-link to="/ownerupdate">Update Account</router-link>
                             </li>
                             <li>
                                 <a>

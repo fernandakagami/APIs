@@ -15,7 +15,7 @@ export default {
         }
       )
         .then((response) => {
-          localStorage.token = response.data.api_token;
+          this.$store.commit("changeToken", response.data.api_token)          
           this.$router.push({
             path: '/dashboard'
           })

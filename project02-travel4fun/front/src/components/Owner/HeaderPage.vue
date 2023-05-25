@@ -7,17 +7,17 @@ export default {
       axios
         .post(
           'http://127.0.0.1:8000/api/logout',
-          { api_token: localStorage.token },
+          { api_token: this.$store.state.token },
           {
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',
-              Authorization: "Bearer " + localStorage.token
+              Authorization: "Bearer " + this.$store.state.token
             }
           })
         .then((response) => {
           console.log(response)
-          localStorage.token = '';
+          this.$store.commit("changeToken", "")
           this.$router.push({
             path: '/owner'
           })

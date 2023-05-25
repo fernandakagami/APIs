@@ -2,18 +2,20 @@
 import axios from 'axios';
 import Header from "../../components/Owner/HeaderPage.vue";
 import Footer from "../../components/Owner/FooterPage.vue";
-import DeleteModal from "../../components/Owner/DeleteModal.vue";
+import AlertModal from "../../components/AlertModal.vue";
 
 export default {
     components: {
         Header,
         Footer,
-        DeleteModal
+        AlertModal
     },
     data() {
         return {
             hotel: [],
-            activeClass: ''
+            activeClass: '',
+            titleModal: '',
+            messageModal: "Are you sure?"
         }
     },
     created() {
@@ -26,7 +28,7 @@ export default {
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
-                        Authorization: "Bearer " + localStorage.token
+                        Authorization: "Bearer " + this.$store.state.token
                     }
                 }
             )
@@ -34,6 +36,13 @@ export default {
                     this.hotel = response.data
                 })
                 .catch((error) => console.log(error))
+        },
+        showModal() {
+            this.activeClass = 'is-active'
+        },
+        updateModal() {
+            this.titleModal = "Update Hotel"
+            this.showModal()
         },
         updateHotel() {
             axios.patch(`http://127.0.0.1:8000/api/hotel/${this.$route.params.id}`,
@@ -55,24 +64,25 @@ export default {
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
-                        Authorization: "Bearer " + localStorage.token
+                        Authorization: "Bearer " + this.$store.state.token
                     }
                 })
-                .then((response) => {
-                    console.log(response)
+                .then((response) => {       
+                    this.activeClass = ''
                 })
                 .catch((error) => console.log(error))
-        },
-        showModal() {
-            this.activeClass = this.activeClass ? '' : 'is-active'
-        },
+        },        
+        deleteModal() {
+            this.titleModal = "Delete"
+            this.showModal()
+        },      
         delete() {
             axios.delete(`http://127.0.0.1:8000/api/hotel/${this.$route.params.id}`,
                 {
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
-                        Authorization: "Bearer " + localStorage.token
+                        Authorization: "Bearer " + this.$store.state.token
                     }
                 })
                 .then((response) => {
@@ -94,7 +104,7 @@ export default {
             <div class="columns">
                 <section class="column is-one-quarter">
                     <nav class="box pt-5 has-text-centered">
-                        <button class="button is-link is-danger is-size-5" @click="showModal">
+                        <button class="button is-link is-danger is-size-5" @click="deleteModal">
                             Delete Hotel
                         </button>
                     </nav>
@@ -103,7 +113,7 @@ export default {
                     <div class="box">
                         <router-link to="/dashboard" class="button is-link is-light is-size-5">Return</router-link>
                         <form>
-                            <form @submit.prevent="updateHotel">
+                            <form @submit.prevent>
                                 <h1 class="has-text-centered is-size-3 has-text-weight-bold mt-3">Update Hotel</h1>
                                 <div class="field">
                                     <label class="label">Name</label>
@@ -186,7 +196,7 @@ export default {
 
                                 <div class="field my-6 is-grouped is-grouped-centered">
                                     <div class="control">
-                                        <button type="submit" class="button is-info px-6">Update</button>
+                                        <button type="submit" class="button is-info px-6" @click="updateModal">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -198,13 +208,6 @@ export default {
     </main>
     <Footer></Footer>
 
-    <div :class="['modal', activeClass]">
-        <DeleteModal :showModal="closeModal" :delete="deleteItem" :title="'Delete'" :message="'Are you sure?'" />
-    </div>
+    <AlertModal :activeClass="this.activeClass" :delete="deleteItem" :updateHotel="updateItem" :title="this.titleModal"
+        :message="this.messageModal" />
 </template>
-
-<style scoped>
-.modal {
-    position: fixed !important;
-}
-</style>

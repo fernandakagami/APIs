@@ -29,7 +29,7 @@ export default {
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
-                        Authorization: "Bearer " + localStorage.token
+                        Authorization: "Bearer " + this.$store.state.token
                     }
                 })
                 .then((response) => {

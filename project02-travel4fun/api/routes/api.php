@@ -24,10 +24,16 @@ use Illuminate\Support\Facades\Auth;
 //});
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('/hotel', HotelController::class);       
+    Route::resource('/hotel', HotelController::class);
+
     Route::post('/logout', [LoginController::class, 'logout']);
+
+    Route::get('/user/profile', [UserController::class, 'show']);
+    Route::patch('/user/profile', [UserController::class, 'update']);
+    Route::delete('/user/delete', [UserController::class, 'destroy']);
 });
 
-Route::resource('/user', UserController::class);
-Route::post('/login', [LoginController::class, 'login']); 
+Route::get('/user', [UserController::class, 'index']);
+Route::post('/user', [UserController::class, 'store']);
+Route::post('/login', [LoginController::class, 'login']);
 

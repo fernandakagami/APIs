@@ -23,18 +23,14 @@ class LoginController extends Controller
             $response = ["message" => "Password or User not exist"];                       
         }
 
-        $token = $user->createToken('api_token')->plainTextToken;        
-        $user->api_token = $token;
-        $user->save();
-        
+        $token = $user->createToken('api_token')->plainTextToken;
+                
         $response = ['api_token' => $token];
-        return response($response, 200);        
+        return response($response, 200);
     } 
 
-    public function logout(Request $request) {  
-        $user = User::where('api_token', $request->user()->api_token)->first();
-        $user->api_token = null;
-        $user->save();
+    public function logout(Request $request) {        
+        $request->user()->currentAccessToken()->delete();
         $response = ['message' => 'You have been successfully logged out!'];
         return response($response, 200);
     }
