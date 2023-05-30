@@ -54,7 +54,7 @@ class UserController extends Controller
     }
 
     public function destroy()
-    {
+    {        
         User::destroy(auth('sanctum')->user()->id);
         return 'User removed';
     }

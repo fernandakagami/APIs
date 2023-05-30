@@ -19,6 +19,7 @@ export default {
         }
     },
     created() {
+        this.getCategory()
         this.getHotel()
     },
     methods: {
@@ -44,7 +45,7 @@ export default {
             this.titleModal = "Update Hotel"
             this.showModal()
         },
-        updateHotel() {
+        update() {
             axios.patch(`http://127.0.0.1:8000/api/hotel/${this.$route.params.id}`,
                 {
                     description: this.hotel.description,
@@ -58,7 +59,7 @@ export default {
                     photos: this.hotel.photos,
                     stars: this.hotel.stars,
                     amenities: this.hotel.amenities,
-                    category: this.hotel.category,
+                    categories_id: this.hotel.category.id,
                 },
                 {
                     headers: {
@@ -67,15 +68,15 @@ export default {
                         Authorization: "Bearer " + this.$store.state.token
                     }
                 })
-                .then((response) => {       
+                .then((response) => {
                     this.activeClass = ''
                 })
                 .catch((error) => console.log(error))
-        },        
+        },
         deleteModal() {
             this.titleModal = "Delete"
             this.showModal()
-        },      
+        },
         delete() {
             axios.delete(`http://127.0.0.1:8000/api/hotel/${this.$route.params.id}`,
                 {
@@ -91,6 +92,15 @@ export default {
                     })
                 })
                 .catch((error) => console.log(error))
+        },
+        getCategory() {
+            axios.get('http://127.0.0.1:8000/api/category')
+                .then((response) => {
+                    this.categories = response.data
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
     }
 }
@@ -111,7 +121,7 @@ export default {
                 </section>
                 <section class="column">
                     <div class="box">
-                        <router-link to="/dashboard" class="button is-link is-light is-size-5">Return</router-link>
+                        <router-link :to="{ name: 'hoteldashboard', params: { id: hotel.id } }" class="button is-link is-light is-size-5">Return</router-link>
                         <form>
                             <form @submit.prevent>
                                 <h1 class="has-text-centered is-size-3 has-text-weight-bold mt-3">Update Hotel</h1>
@@ -189,14 +199,20 @@ export default {
                                     <div class="field">
                                         <label class="label">Category</label>
                                         <div class="control">
-                                            <input class="input" type="text" v-model="this.hotel.category">
+                                            <select class="input" v-model="this.hotel.category.id">
+                                                <option disabled>Choose a item</option>
+                                                <option v-for="category in this.categories" v-bind:value="category.id">
+                                                    {{ category.name }}
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="field my-6 is-grouped is-grouped-centered">
                                     <div class="control">
-                                        <button type="submit" class="button is-info px-6" @click="updateModal">Update</button>
+                                        <button type="submit" class="button is-info px-6"
+                                            @click="updateModal">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -208,6 +224,6 @@ export default {
     </main>
     <Footer></Footer>
 
-    <AlertModal :activeClass="this.activeClass" :delete="deleteItem" :updateHotel="updateItem" :title="this.titleModal"
+    <AlertModal :activeClass="this.activeClass" :delete="deleteItem" :update="updateItem" :title="this.titleModal"
         :message="this.messageModal" />
 </template>

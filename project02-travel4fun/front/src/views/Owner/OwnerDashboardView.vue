@@ -31,7 +31,7 @@ export default {
                     this.hotels = response.data
                 })
                 .catch((error) => console.log(error))
-        }
+        },
     }
 }
 </script>
@@ -49,12 +49,7 @@ export default {
                                 <router-link to="/hotelcreate">Register New Hotel</router-link>
                             </li>
                             <li>
-                                <router-link to="/ownerupdate">Update Account</router-link>
-                            </li>
-                            <li>
-                                <a>
-                                    Delete Account
-                                </a>
+                                <router-link to="/ownerupdate">Account</router-link>
                             </li>
                         </ul>
                     </nav>
@@ -63,7 +58,7 @@ export default {
                     <div class="box">
                         <ul class="mt-5">
                             <li v-for="hotel in this.hotels" class="box mb-5">
-                                <router-link :to="{ name: 'hotelshow', params: { id: hotel.id } }" class="columns">
+                                <router-link :to="{ name: 'hoteldashboard', params: { id: hotel.id } }" class="columns">
                                     <section class="column is-one-third">
                                         <div class="hotel-image" :style="{ backgroundImage: `url(${hotel.photos})` }"></div>
                                     </section>

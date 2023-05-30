@@ -14,18 +14,17 @@ return new class extends Migration
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
             $table->longtext('description');
-            $table->string('postal_code');
-            $table->string('country_name');
-            $table->string('region_name');
-            $table->string('city');
-            $table->longtext('address');
-            $table->string('name');
-            $table->text('short_description');
-            $table->text('photos');
-            $table->decimal('stars', 3, 2);
-            $table->text('amenities');
-            $table->string('category');
-            $table->foreignId('users_id')->constrained()->onDelete('cascade');
+            $table->string('postal_code')->nullable();
+            $table->string('country_name')->nullable();
+            $table->string('region_name')->nullable();
+            $table->string('city')->nullable();
+            $table->longtext('address')->nullable();
+            $table->string('name')->nullable();
+            $table->text('short_description')->nullable();
+            $table->text('photos')->nullable();
+            $table->decimal('stars', 3, 2)->nullable();            
+            $table->foreignId('categories_id')->nullable();
+            $table->foreignId('users_id')->constrained()->onDelete('cascade')->nullable();
             $table->timestamps();
         });
     }

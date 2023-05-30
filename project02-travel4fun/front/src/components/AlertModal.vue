@@ -9,7 +9,7 @@ export default {
             this.$parent.delete();
         },
         updateItem() {
-            this.$parent.updateHotel();
+            this.$parent.update();
         }
     }
 }

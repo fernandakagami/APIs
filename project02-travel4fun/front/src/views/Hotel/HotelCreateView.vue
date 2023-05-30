@@ -8,6 +8,15 @@ export default {
         Header,
         Footer
     },
+    data() {
+        return {
+            categories: [],
+            category: 'default'
+        }
+    },
+    created() {
+        this.getCategory()
+    },
     methods: {
         register() {
             axios.post('http://127.0.0.1:8000/api/hotel',
@@ -33,12 +42,21 @@ export default {
                     }
                 })
                 .then((response) => {
-                    console.log(response)                    
+                    console.log(response)
                     this.$router.push({
                         path: '/dashboard'
                     })
                 })
                 .catch((error) => console.log(error))
+        },
+        getCategory() {
+            axios.get('http://127.0.0.1:8000/api/category')
+                .then((response) => {                    
+                    this.categories = response.data
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
     }
 }
@@ -48,7 +66,7 @@ export default {
 <template>
     <Header></Header>
 
-    <main>        
+    <main>
         <div class="container is-max-desktop">
             <router-link to="/dashboard" class="button mt-5">Return</router-link>
             <form @submit.prevent="register">
@@ -127,7 +145,12 @@ export default {
                     <div class="field">
                         <label class="label">Category</label>
                         <div class="control">
-                            <input class="input" type="text" v-model="category">
+                            <select class="input" v-model="category">
+                                <option disabled value="default">Choose a item</option>
+                                <option v-for="category in this.categories" v-bind:value="category.id">
+                                    {{ category.name }}
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -144,5 +167,4 @@ export default {
     <Footer></Footer>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -13,7 +13,7 @@ class HotelController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {        
         $hotel = new Hotel;
         $hotel->description = $request->input('description');
         $hotel->postal_code = $request->input('postal_code');
@@ -26,16 +26,16 @@ class HotelController extends Controller
         $hotel->photos = $request->input('photos');
         $hotel->stars = $request->input('stars');
         $hotel->amenities = $request->input('amenities');
-        $hotel->category = $request->input('category');
-        $hotel->users_id = $request->user()->id;        
+        $hotel->categories_id = $request->input("category");
+        $hotel->users_id = $request->user()->id;
         $hotel->save();
 
         return 'Hotel included.';
     }
 
-    public function show(int $id, Request $request)
+    public function show(int $id)
     {        
-        $hotel = Hotel::findOrFail($id);
+        $hotel = Hotel::with('category')->find($id);
         
         return $hotel;
     }
@@ -55,5 +55,4 @@ class HotelController extends Controller
         Hotel::destroy($id);
         return 'Hotel removed';
     }
-
 }

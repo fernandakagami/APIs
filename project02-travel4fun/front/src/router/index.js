@@ -3,9 +3,12 @@ import HomeView from '../views/HomeView.vue'
 import OwnerView from '../views/OwnerView.vue'
 import OwnerCreateView from '../views/OwnerCreateView.vue'
 import OwnerUpdateView from '../views/Owner/OwnerUpdateView.vue'
-import OwnerDashboard from '../views/Owner/OwnerDashboard.vue'
-import HotelCreateView from '../views/Owner/HotelCreateView.vue'
-import HotelShowView from '../views/Owner/HotelShowView.vue'
+import OwnerPasswordView from '../views/Owner/OwnerPasswordView.vue'
+import OwnerDashboardView from '../views/Owner/OwnerDashboardView.vue'
+import HotelDashboardView from '../views/Hotel/HotelDashboardView.vue'
+import HotelCreateView from '../views/Hotel/HotelCreateView.vue'
+import HotelShowView from '../views/Hotel/HotelShowView.vue'
+
 
 
 const router = createRouter({
@@ -32,9 +35,14 @@ const router = createRouter({
       component: OwnerUpdateView
     },
     {
+      path: '/ownerpassword',
+      name: 'ownerpassword',      
+      component: OwnerPasswordView
+    },
+    {
       path: '/dashboard',
       name: 'ownerdashboard',      
-      component: OwnerDashboard
+      component: OwnerDashboardView
     },
     {
       path: '/hotelcreate',
@@ -43,6 +51,12 @@ const router = createRouter({
     },
     {
       path: '/hotel/:id',
+      name: 'hoteldashboard',
+      component: HotelDashboardView,
+      props: true
+    },
+    {
+      path: '/hotel/profile/:id',
       name: 'hotelshow',
       component: HotelShowView,
       props: true

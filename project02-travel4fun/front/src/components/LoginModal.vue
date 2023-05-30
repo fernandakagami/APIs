@@ -55,5 +55,3 @@ export default {
   </div>
   <button class="modal-close is-large" aria-label="close" @click='closeModal'></button>
 </template>
-
-<style scoped></style>

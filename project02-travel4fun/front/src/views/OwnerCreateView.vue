@@ -1,6 +1,5 @@
 <script>
 import axios from 'axios';
-import { userCreate } from "../service/owner.js"
 
 export default {
   methods: {

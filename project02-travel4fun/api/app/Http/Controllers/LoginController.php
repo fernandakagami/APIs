@@ -23,6 +23,7 @@ class LoginController extends Controller
             $response = ["message" => "Password or User not exist"];                       
         }
 
+        $user->tokens()->delete();
         $token = $user->createToken('api_token')->plainTextToken;
                 
         $response = ['api_token' => $token];

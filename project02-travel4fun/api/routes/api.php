@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AmenityController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -36,4 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/user', [UserController::class, 'index']);
 Route::post('/user', [UserController::class, 'store']);
 Route::post('/login', [LoginController::class, 'login']);
+
+Route::resource('/category', CategoryController::class);
+Route::resource('/amenity', AmenityController::class);
 
