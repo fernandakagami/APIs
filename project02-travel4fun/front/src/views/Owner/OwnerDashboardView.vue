@@ -1,7 +1,7 @@
 <script>
 import Header from "../../components/Owner/HeaderPage.vue";
 import Footer from "../../components/Owner/FooterPage.vue";
-import axios from "axios";
+import { instance } from "../../services";
 
 export default {
     components: {
@@ -13,26 +13,13 @@ export default {
             hotels: []
         }
     },
-    created() {
-        this.getHotels()
-    },
-    methods: {
-        getHotels() {
-            axios.get('http://127.0.0.1:8000/api/hotel',
-                {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization: "Bearer " + this.$store.state.token
-                    }
-                }
-            )
-                .then((response) => {
-                    this.hotels = response.data
-                })
-                .catch((error) => console.log(error))
-        },
-    }
+    mounted() {
+        instance.get('hotel')
+            .then((response) => {
+                this.hotels = response.data                
+            })
+            .catch((error) => console.log(error))    
+        }
 }
 </script>
 

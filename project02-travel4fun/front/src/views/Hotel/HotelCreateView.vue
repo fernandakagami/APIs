@@ -11,11 +11,14 @@ export default {
     data() {
         return {
             categories: [],
-            category: 'default'
+            category: 'default',
+            amenities: [],
+            checkedAmenities: []
         }
     },
     created() {
         this.getCategory()
+        this.getAmenity()
     },
     methods: {
         register() {
@@ -31,7 +34,7 @@ export default {
                     short_description: this.short_description,
                     photos: this.photos,
                     stars: this.stars,
-                    amenities: this.amenities,
+                    amenities: this.checkedAmenities,
                     category: this.category,
                 },
                 {
@@ -51,8 +54,18 @@ export default {
         },
         getCategory() {
             axios.get('http://127.0.0.1:8000/api/category')
-                .then((response) => {                    
+                .then((response) => {
                     this.categories = response.data
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
+        getAmenity() {
+            axios.get('http://127.0.0.1:8000/api/amenity')
+                .then((response) => {
+                    console.log(response.data)
+                    this.amenities = response.data
                 })
                 .catch((error) => {
                     console.log(error)
@@ -131,9 +144,11 @@ export default {
                 </div>
                 <div class="field">
                     <label class="label">Amenities</label>
-                    <div class="control">
-                        <input class="input" type="text" v-model="amenities">
+                    <div class="control" v-for="amenity in this.amenities">
+                        <input class="mr-2" type="checkbox" :id="amenity.id" v-bind:value="amenity.id" v-model="checkedAmenities">
+                        <label :for="amenity.id">{{ amenity.name }}</label>
                     </div>
+                    <div>{{  checkedAmenities }}</div>
                 </div>
                 <div class="field-body">
                     <div class="field">

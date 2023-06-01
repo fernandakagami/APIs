@@ -29,8 +29,8 @@ export default {
                 }
             )
                 .then((response) => {
-                    this.hotel = response.data
-                    console.log(this.hotel)
+                    console.log(response.data)
+                    this.hotel = response.data                    
                 })
                 .catch((error) => console.log(error))
         },
@@ -63,7 +63,7 @@ export default {
                                 <router-link to="/dashboard" class="button is-link is-light is-size-5 mb-2">Return</router-link>
                             </li>
                             <li>
-                                <router-link :to="{ name: 'hotelshow', params: { id: hotel.id } }">Update Hotel</router-link>
+                                <router-link :to="{ name: 'hotelupdate', params: { id: hotel.id } }">Update Hotel</router-link>
                             </li>
                             <li>
                                 Include a New Room
@@ -86,8 +86,8 @@ export default {
                         <img class="hotel-image mb-2" :style="{ backgroundImage: `url(${hotel.photos})` }">
                         <p class="description has-text-justified mb-4">{{ hotel.description }}</p>
                         <h4 class="has-text-weight-semibold is-size-6 mb-1">Amenities</h4>
-                        <ul>
-                            <li class="amenities">{{  hotel.amenities }}</li>
+                        <ul v-for="amenity in this.hotel.amenities">
+                            <li class="amenities">{{ amenity.name }}</li>
                         </ul>
                     </div>
                 </section>

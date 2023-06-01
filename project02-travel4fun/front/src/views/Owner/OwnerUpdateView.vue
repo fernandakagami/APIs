@@ -2,7 +2,7 @@
 import Header from "../../components/Owner/HeaderPage.vue";
 import Footer from "../../components/Owner/FooterPage.vue";
 import AlertModal from "../../components/AlertModal.vue";
-import axios from "axios";
+import { instance } from '../../services';
 
 export default {
     components: {
@@ -18,26 +18,7 @@ export default {
             messageModal: 'Are you sure?'
         }
     },
-    created() {
-        this.getUser()
-    },
-    methods: {
-        getUser() {
-            axios.get('http://127.0.0.1:8000/api/user/profile',
-                {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization: "Bearer " + this.$store.state.token
-                    }
-                })
-                .then((response) => {
-                    this.user = response.data
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
+    methods: {        
         showModal() {
             this.activeClass = 'is-active'
         },
@@ -46,17 +27,10 @@ export default {
             this.showModal()
         },
         update() {
-            axios.patch(`http://127.0.0.1:8000/api/user/profile`,
+            instance.patch(`user/profile`,
                 {
                     name: this.user.name,
                     email: this.user.email
-                },
-                {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization: "Bearer " + this.$store.state.token
-                    }
                 })
                 .then((response) => {
                     this.activeClass = ''
@@ -68,14 +42,7 @@ export default {
             this.showModal()
         },       
         delete() {
-            axios.delete('http://127.0.0.1:8000/api/user/delete',
-                {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization: "Bearer " + this.$store.state.token
-                    }
-                })
+            instance.delete('user/delete')
                 .then((response) => {
                     this.$router.push({
                         path: '/owner'
@@ -83,6 +50,13 @@ export default {
                 })
                 .catch((error) => console.log(error))
         }
+    },
+    mounted() {
+        instance.get('user/profile')
+            .then((response) => {
+                this.user = response.data
+            })
+            .catch((error) => console.log(error))    
     }
 }
 </script>

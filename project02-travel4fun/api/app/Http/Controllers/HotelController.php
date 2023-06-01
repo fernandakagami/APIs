@@ -9,7 +9,7 @@ class HotelController extends Controller
 {
     public function index(Request $request)
     {        
-        return Hotel::where('users_id', $request->user()->id)->get();
+        return Hotel::with('amenities')->where('users_id', $request->user()->id)->get();
     }
 
     public function store(Request $request)
@@ -24,18 +24,19 @@ class HotelController extends Controller
         $hotel->name = $request->input('name');
         $hotel->short_description = $request->input('short_description');
         $hotel->photos = $request->input('photos');
-        $hotel->stars = $request->input('stars');
-        $hotel->amenities = $request->input('amenities');
+        $hotel->stars = $request->input('stars');        
         $hotel->categories_id = $request->input("category");
         $hotel->users_id = $request->user()->id;
         $hotel->save();
+
+        $hotel->amenities()->attach($request->input('amenities'));     
 
         return 'Hotel included.';
     }
 
     public function show(int $id)
     {        
-        $hotel = Hotel::with('category')->find($id);
+        $hotel = Hotel::with(['amenities', 'category'])->find($id);
         
         return $hotel;
     }

@@ -7,7 +7,7 @@ import OwnerPasswordView from '../views/Owner/OwnerPasswordView.vue'
 import OwnerDashboardView from '../views/Owner/OwnerDashboardView.vue'
 import HotelDashboardView from '../views/Hotel/HotelDashboardView.vue'
 import HotelCreateView from '../views/Hotel/HotelCreateView.vue'
-import HotelShowView from '../views/Hotel/HotelShowView.vue'
+import HotelUpdateView from '../views/Hotel/HotelUpdateView.vue'
 
 
 
@@ -57,8 +57,8 @@ const router = createRouter({
     },
     {
       path: '/hotel/profile/:id',
-      name: 'hotelshow',
-      component: HotelShowView,
+      name: 'hotelupdate',
+      component: HotelUpdateView,
       props: true
     }
   ]

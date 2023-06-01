@@ -1,6 +1,7 @@
 <script>
 import axios from "axios";
-
+import { instance } from "../services";
+ 
 export default {
   props: ['showModal'],
   methods: {
@@ -8,14 +9,15 @@ export default {
       this.$parent.showModal();
     },
     login() {
-      axios.post('http://127.0.0.1:8000/api/login',
+      instance.post('login',
         {
           email: this.email,
           password: this.password
         }
       )
         .then((response) => {
-          this.$store.commit("changeToken", response.data.api_token)          
+          this.$store.commit("changeToken", response.data.api_token)
+          instance.defaults.headers.common['Authorization'] = `Bearer ${this.$store.state.token}`
           this.$router.push({
             path: '/dashboard'
           })

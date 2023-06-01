@@ -15,11 +15,15 @@ export default {
             hotel: [],
             activeClass: '',
             titleModal: '',
-            messageModal: "Are you sure?"
+            messageModal: "Are you sure?",
+            categories: [],
+            amenities: [],
+            checkedAmenities: []
         }
     },
     created() {
         this.getCategory()
+        this.getAmenity()
         this.getHotel()
     },
     methods: {
@@ -34,6 +38,7 @@ export default {
                 }
             )
                 .then((response) => {
+                    console.log(response.data)
                     this.hotel = response.data
                 })
                 .catch((error) => console.log(error))
@@ -58,7 +63,7 @@ export default {
                     short_description: this.hotel.short_description,
                     photos: this.hotel.photos,
                     stars: this.hotel.stars,
-                    amenities: this.hotel.amenities,
+                    amenities: this.checkedAmenities,
                     categories_id: this.hotel.category.id,
                 },
                 {
@@ -101,6 +106,15 @@ export default {
                 .catch((error) => {
                     console.log(error)
                 })
+        },
+        getAmenity() {
+            axios.get('http://127.0.0.1:8000/api/amenity')
+                .then((response) => {                    
+                    this.amenities = response.data
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
     }
 }
@@ -121,7 +135,8 @@ export default {
                 </section>
                 <section class="column">
                     <div class="box">
-                        <router-link :to="{ name: 'hoteldashboard', params: { id: hotel.id } }" class="button is-link is-light is-size-5">Return</router-link>
+                        <router-link :to="{ name: 'hoteldashboard', params: { id: hotel.id } }"
+                            class="button is-link is-light is-size-5">Return</router-link>
                         <form>
                             <form @submit.prevent>
                                 <h1 class="has-text-centered is-size-3 has-text-weight-bold mt-3">Update Hotel</h1>
@@ -184,9 +199,10 @@ export default {
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <label class="label">Amenities</label>
-                                    <div class="control">
-                                        <input class="input" type="text" v-model="this.hotel.amenities">
+                                    <label class="label">Amenities</label>                                    
+                                    <div class="control" v-for="amenity in this.amenities">
+                                        <input class="mr-2" type="checkbox" :id="amenity.id" v-bind:value="amenity.id" v-model="checkedAmenities" :selected="selected.indexOf(amenity.id) != -1">
+                                        <label :for="amenity.id">{{ amenity.name }}</label>
                                     </div>
                                 </div>
                                 <div class="field-body">

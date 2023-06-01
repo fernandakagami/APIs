@@ -15,9 +15,7 @@ export default {
               Authorization: "Bearer " + this.$store.state.token
             }
           })
-        .then((response) => {
-          console.log(response)
-          this.$store.commit("changeToken", "")
+        .then((response) => {                    
           this.$router.push({
             path: '/owner'
           })
