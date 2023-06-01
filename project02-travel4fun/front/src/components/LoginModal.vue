@@ -1,5 +1,4 @@
 <script>
-import axios from "axios";
 import { instance } from "../services";
  
 export default {

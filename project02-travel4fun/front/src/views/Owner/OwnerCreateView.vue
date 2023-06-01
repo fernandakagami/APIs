@@ -1,11 +1,10 @@
 <script>
-import axios from 'axios';
+import { instance } from '../../services';
 
 export default {
   methods: {
     register() {
-      axios
-        .post('http://127.0.0.1:8000/api/user',
+      instance.post('user',
           {
             name: this.name,
             email: this.email,

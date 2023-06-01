@@ -2,7 +2,7 @@
 import Header from '../../components/Owner/HeaderPage.vue'
 import Footer from '../../components/Owner/FooterPage.vue'
 import Modal from '../../components/AlertModal.vue'
-import axios from 'axios';
+import { instance } from '../../services';
 
 export default {
     components: {
@@ -25,26 +25,19 @@ export default {
             this.activeClass = 'is-active'
         },
         update() {
-            axios.patch('http://127.0.0.1:8000/api/user/profile',
+            instance.patch('http://127.0.0.1:8000/api/user/profile',
                 {
                     password: this.password,
-                    password_confirmation: this.confirmationPassword,  
-                },
-                {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization: "Bearer " + this.$store.state.token
-                    }
+                    password_confirmation: this.confirmationPassword,
                 })
-            .then((response) => {                
-                this.activeClass = ''
-                this.password = ''
-                this.password_confirmation = ''
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+                .then((response) => {
+                    this.activeClass = ''
+                    this.password = ''
+                    this.password_confirmation = ''
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
     }
 }
@@ -83,5 +76,6 @@ export default {
 
     <Footer></Footer>
 
-    <Modal :activeClass="this.activeClass" :update="updateItem" :title="this.titleModal" :message="this.messageModal"></Modal>
+    <Modal :activeClass="this.activeClass" :update="updateItem" :title="this.titleModal" :message="this.messageModal">
+    </Modal>
 </template>

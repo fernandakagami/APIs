@@ -1,8 +1,8 @@
 <script>
-import axios from 'axios';
 import Header from "../../components/Owner/HeaderPage.vue";
 import Footer from "../../components/Owner/FooterPage.vue";
 import AlertModal from "../../components/AlertModal.vue";
+import { instance } from '../../services';
 
 export default {
     components: {
@@ -13,36 +13,15 @@ export default {
     data() {
         return {
             hotel: [],
-            activeClass: '',
-            titleModal: '',
-            messageModal: "Are you sure?",
             categories: [],
             amenities: [],
+            activeClass: '',
+            titleModal: '',
+            messageModal: "Are you sure?",            
             checkedAmenities: []
         }
     },
-    created() {
-        this.getCategory()
-        this.getAmenity()
-        this.getHotel()
-    },
-    methods: {
-        getHotel() {
-            axios.get(`http://127.0.0.1:8000/api/hotel/${this.$route.params.id}`,
-                {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization: "Bearer " + this.$store.state.token
-                    }
-                }
-            )
-                .then((response) => {
-                    console.log(response.data)
-                    this.hotel = response.data
-                })
-                .catch((error) => console.log(error))
-        },
+    methods: {        
         showModal() {
             this.activeClass = 'is-active'
         },
@@ -51,7 +30,7 @@ export default {
             this.showModal()
         },
         update() {
-            axios.patch(`http://127.0.0.1:8000/api/hotel/${this.$route.params.id}`,
+            instance.patch(`hotel/${this.$route.params.id}`,
                 {
                     description: this.hotel.description,
                     postal_code: this.hotel.postal_code,
@@ -65,13 +44,6 @@ export default {
                     stars: this.hotel.stars,
                     amenities: this.checkedAmenities,
                     categories_id: this.hotel.category.id,
-                },
-                {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization: "Bearer " + this.$store.state.token
-                    }
                 })
                 .then((response) => {
                     this.activeClass = ''
@@ -83,39 +55,22 @@ export default {
             this.showModal()
         },
         delete() {
-            axios.delete(`http://127.0.0.1:8000/api/hotel/${this.$route.params.id}`,
-                {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization: "Bearer " + this.$store.state.token
-                    }
-                })
+            instance.delete(`hotel/${this.$route.params.id}`)
                 .then((response) => {
                     this.$router.push({
                         path: '/dashboard'
                     })
                 })
                 .catch((error) => console.log(error))
-        },
-        getCategory() {
-            axios.get('http://127.0.0.1:8000/api/category')
-                .then((response) => {
-                    this.categories = response.data
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
-        getAmenity() {
-            axios.get('http://127.0.0.1:8000/api/amenity')
-                .then((response) => {                    
-                    this.amenities = response.data
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        }
+        }        
+    },
+    async mounted() {        
+            const response = await instance.get('category')
+            this.categories = response.data
+            const response2 = await instance.get('amenity')
+            this.amenities = response2.data
+            const response3 = await instance.get(`hotel/${this.$route.params.id}`)
+            this.hotel = response3.data            
     }
 }
 </script>
@@ -201,7 +156,7 @@ export default {
                                 <div class="field">
                                     <label class="label">Amenities</label>                                    
                                     <div class="control" v-for="amenity in this.amenities">
-                                        <input class="mr-2" type="checkbox" :id="amenity.id" v-bind:value="amenity.id" v-model="checkedAmenities" :selected="selected.indexOf(amenity.id) != -1">
+                                        <input class="mr-2" type="checkbox" :id="amenity.id" v-bind:value="amenity.id" v-model="checkedAmenities">
                                         <label :for="amenity.id">{{ amenity.name }}</label>
                                     </div>
                                 </div>
@@ -215,7 +170,7 @@ export default {
                                     <div class="field">
                                         <label class="label">Category</label>
                                         <div class="control">
-                                            <select class="input" v-model="this.hotel.category.id">
+                                            <select class="input" v-model="this.hotel.categories_id" >
                                                 <option disabled>Choose a item</option>
                                                 <option v-for="category in this.categories" v-bind:value="category.id">
                                                     {{ category.name }}

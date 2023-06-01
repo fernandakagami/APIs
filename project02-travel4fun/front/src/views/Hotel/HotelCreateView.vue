@@ -1,7 +1,7 @@
 <script>
-import axios from "axios";
 import Header from "../../components/Owner/HeaderPage.vue";
 import Footer from "../../components/Owner/FooterPage.vue";
+import { instance } from '../../services';
 
 export default {
     components: {
@@ -16,13 +16,9 @@ export default {
             checkedAmenities: []
         }
     },
-    created() {
-        this.getCategory()
-        this.getAmenity()
-    },
     methods: {
         register() {
-            axios.post('http://127.0.0.1:8000/api/hotel',
+            instance.post('http://127.0.0.1:8000/api/hotel',
                 {
                     description: this.description,
                     postal_code: this.postal_code,
@@ -36,42 +32,21 @@ export default {
                     stars: this.stars,
                     amenities: this.checkedAmenities,
                     category: this.category,
-                },
-                {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization: "Bearer " + this.$store.state.token
-                    }
                 })
-                .then((response) => {
-                    console.log(response)
+                .then((response) => {                    
                     this.$router.push({
                         path: '/dashboard'
                     })
                 })
                 .catch((error) => console.log(error))
-        },
-        getCategory() {
-            axios.get('http://127.0.0.1:8000/api/category')
-                .then((response) => {
-                    this.categories = response.data
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
-        getAmenity() {
-            axios.get('http://127.0.0.1:8000/api/amenity')
-                .then((response) => {
-                    console.log(response.data)
-                    this.amenities = response.data
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
         }
-    }
+    },
+    async mounted() {
+        const response = await instance.get('category')
+        this.categories = response.data        
+        const response2 = await instance.get('amenity')
+        this.amenities = response2.data
+    }        
 }
 
 </script>
@@ -147,8 +122,7 @@ export default {
                     <div class="control" v-for="amenity in this.amenities">
                         <input class="mr-2" type="checkbox" :id="amenity.id" v-bind:value="amenity.id" v-model="checkedAmenities">
                         <label :for="amenity.id">{{ amenity.name }}</label>
-                    </div>
-                    <div>{{  checkedAmenities }}</div>
+                    </div>                    
                 </div>
                 <div class="field-body">
                     <div class="field">
