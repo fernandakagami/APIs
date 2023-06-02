@@ -1,16 +1,21 @@
 <script type="module">
 import LoginModal from '../components/LoginModal.vue';
 import Footer from '../components/Owner/FooterPage.vue';
+import Message from '../components/Message.vue';
 
 export default {
     components: {
         LoginModal,
         Footer,
+        Message
     },
     data() {
         return {
-            activeClass: ''
+            activeClass: '',
         }
+    },
+    created () {
+        this.$store.dispatch('show')
     },
     methods: {
         showModal() {
@@ -23,6 +28,7 @@ export default {
 <template>
     <header>
         <div class="container is-max-desktop">
+            <Message v-show="this.$store.state.show" :message="this.$store.state.notification" class="is-success"></Message>
             <div class="is-flex is-justify-content-space-between is-align-items-center header-content">
                 <div>
                     <img src="../assets/logo.png" alt="logo" class="logo" />
@@ -42,7 +48,8 @@ export default {
 
     <main>
         <section class="section-one is-flex is-justify-content-space-between is-align-items-center">
-            <section class="container is-max-desktop is-flex is-justify-content-space-between is-align-items-center section-one-container">
+            <section
+                class="container is-max-desktop is-flex is-justify-content-space-between is-align-items-center section-one-container">
                 <section class="is-flex is-justify-content-center is-flex-direction-column section-container-one">
                     <h3 class="section-container-one-title">Register in <em>Sunday</em> and increase your client rate now!!!
                     </h3>
@@ -68,7 +75,7 @@ export default {
             <div class="is-flex is-justify-content-center is-align-items-center container is-max-desktop">
                 <button class="button is-large px-6 button-contact-us">Contact Us</button>
             </div>
-            
+
         </section>
     </main>
 
@@ -76,7 +83,7 @@ export default {
 
     <div :class="['modal', activeClass]">
         <LoginModal :showModal="closeModal" />
-    </div>
+    </div>    
 </template>
 
 <style scoped>
@@ -183,5 +190,4 @@ em {
     background-color: #003b95;
     color: white;
     border-radius: 6px;
-}
-</style>
+}</style>

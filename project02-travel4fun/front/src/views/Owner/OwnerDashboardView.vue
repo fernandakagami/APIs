@@ -13,13 +13,10 @@ export default {
             hotels: []
         }
     },
-    mounted() {
-        instance.get('hotel')
-            .then((response) => {
-                this.hotels = response.data                
-            })
-            .catch((error) => console.log(error))    
-        }
+    async mounted() {
+        const response = await instance.get('hotel')
+        this.hotels = response.data
+    }
 }
 </script>
 

@@ -13,6 +13,13 @@ export default {
             role: "owner"
           }
         )
+        .then((response) => {
+          this.$store.state.notification = 'User created successfully'
+          this.$store.state.show = true
+          this.$router.push({
+            path: '/owner'
+          })
+        })
         .catch((error) => {
           console.log(error)
         })
@@ -24,7 +31,7 @@ export default {
 <template>
   <header>
     <div class="container is-max-desktop">
-      <img src="../assets/logo.png" alt="logo" class="logo" />
+      <img src="../../assets/logo.png" alt="logo" class="logo" />
     </div>
   </header>
   <div class="container is-max-desktop">

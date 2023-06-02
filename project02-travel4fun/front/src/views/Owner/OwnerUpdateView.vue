@@ -51,12 +51,9 @@ export default {
                 .catch((error) => console.log(error))
         }
     },
-    mounted() {
-        instance.get('user/profile')
-            .then((response) => {
-                this.user = response.data
-            })
-            .catch((error) => console.log(error))    
+    async mounted() {
+        const response = await instance.get('user/profile')
+        this.user = response.data        
     }
 }
 </script>

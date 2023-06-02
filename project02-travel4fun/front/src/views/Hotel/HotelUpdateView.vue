@@ -17,11 +17,11 @@ export default {
             amenities: [],
             activeClass: '',
             titleModal: '',
-            messageModal: "Are you sure?",            
+            messageModal: "Are you sure?",
             checkedAmenities: []
         }
     },
-    methods: {        
+    methods: {
         showModal() {
             this.activeClass = 'is-active'
         },
@@ -43,7 +43,7 @@ export default {
                     photos: this.hotel.photos,
                     stars: this.hotel.stars,
                     amenities: this.checkedAmenities,
-                    categories_id: this.hotel.category.id,
+                    categories_id: this.hotel.categories_id,
                 })
                 .then((response) => {
                     this.activeClass = ''
@@ -62,15 +62,15 @@ export default {
                     })
                 })
                 .catch((error) => console.log(error))
-        }        
+        }
     },
-    async mounted() {        
-            const response = await instance.get('category')
-            this.categories = response.data
-            const response2 = await instance.get('amenity')
-            this.amenities = response2.data
-            const response3 = await instance.get(`hotel/${this.$route.params.id}`)
-            this.hotel = response3.data            
+    async mounted() {
+        const response = await instance.get('category')
+        this.categories = response.data
+        const response2 = await instance.get('amenity')
+        this.amenities = response2.data
+        const response3 = await instance.get(`hotel/${this.$route.params.id}`)
+        this.hotel = response3.data
     }
 }
 </script>
@@ -154,7 +154,7 @@ export default {
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <label class="label">Amenities</label>                                    
+                                    <label class="label">Amenities</label>
                                     <div class="control" v-for="amenity in this.amenities">
                                         <input class="mr-2" type="checkbox" :id="amenity.id" v-bind:value="amenity.id" v-model="checkedAmenities">
                                         <label :for="amenity.id">{{ amenity.name }}</label>
@@ -170,7 +170,7 @@ export default {
                                     <div class="field">
                                         <label class="label">Category</label>
                                         <div class="control">
-                                            <select class="input" v-model="this.hotel.categories_id" >
+                                            <select class="input" v-model="this.hotel.categories_id">
                                                 <option disabled>Choose a item</option>
                                                 <option v-for="category in this.categories" v-bind:value="category.id">
                                                     {{ category.name }}
