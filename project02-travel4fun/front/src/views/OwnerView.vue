@@ -28,7 +28,7 @@ export default {
 <template>
     <header>
         <div class="container is-max-desktop">
-            <Message v-show="this.$store.state.show" :message="this.$store.state.notification" class="is-success"></Message>
+            <Message v-show="this.$store.state.show" :message="this.$store.state.notification" :class="this.$store.state.toastClass"></Message>
             <div class="is-flex is-justify-content-space-between is-align-items-center header-content">
                 <div>
                     <img src="../assets/logo.png" alt="logo" class="logo" />

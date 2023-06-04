@@ -20,12 +20,13 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
+            'password_confirmation' => 'required|string|min:6|same:password'
         ]);
 
         if ($validator->fails())
         {
-            return response($response, Response::HTTP_UNPROCESSABLE_ENTITY); 
+            return response($validator->errors(), 400);
         }
 
         $request['password'] = Hash::make($request['password']);
@@ -34,7 +35,7 @@ class UserController extends Controller
         $user = User::create($request->toArray());        
         $token = $user->createToken('api_token')->plainTextToken;        
 
-        $response = ['api_token' => $token];        
+        $response = ['api_token' => $token];   
         return response($response, 200);
     }
 

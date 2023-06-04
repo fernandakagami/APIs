@@ -23,7 +23,8 @@ export default {
     width: 300px;
     position: absolute;
     right: 0;
-    top: 100px
+    top: 110px;
+    z-index: 99;
 }
 
 p {

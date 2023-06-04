@@ -34,6 +34,10 @@ export default {
                     this.activeClass = ''
                     this.password = ''
                     this.password_confirmation = ''
+                    this.$store.state.notification = 'Password updated successfully'
+                    this.$store.state.show = true
+                    this.$store.state.toastClass = 'is-success'
+                    this.$store.dispatch('show')
                 })
                 .catch((error) => {
                     console.log(error)

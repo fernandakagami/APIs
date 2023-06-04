@@ -25,11 +25,11 @@ class HotelController extends Controller
         $hotel->short_description = $request->input('short_description');
         $hotel->photos = $request->input('photos');
         $hotel->stars = $request->input('stars');        
-        $hotel->categories_id = $request->input("category");
+        $hotel->categories_id = $request->input("categories_id");
         $hotel->users_id = $request->user()->id;
         $hotel->save();
 
-        $hotel->amenities()->attach($request->input('amenities'));     
+        $hotel->amenities()->attach($request->input('amenities'));
 
         return 'Hotel included.';
     }
@@ -45,8 +45,21 @@ class HotelController extends Controller
     {
         $hotel = Hotel::findOrFail($id);
 
-        $hotel->fill($request->all());
+        $hotel->description = $request->input('description');
+        $hotel->postal_code = $request->input('postal_code');
+        $hotel->country_name = $request->input('country_name');
+        $hotel->region_name = $request->input('region_name');
+        $hotel->city = $request->input('city');
+        $hotel->address = $request->input('address');
+        $hotel->name = $request->input('name');
+        $hotel->short_description = $request->input('short_description');
+        $hotel->photos = $request->input('photos');
+        $hotel->stars = $request->input('stars');        
+        $hotel->categories_id = $request->input("categories_id");
+        $hotel->users_id = $request->user()->id;
         $hotel->save();
+
+        $hotel->amenities()->sync($request->input('amenities'));
 
         return "Hotel updated";
     }

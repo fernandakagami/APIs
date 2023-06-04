@@ -31,9 +31,13 @@ export default {
                     photos: this.photos,
                     stars: this.stars,
                     amenities: this.checkedAmenities,
-                    category: this.category,
+                    categories_id: this.category,
                 })
-                .then((response) => {                    
+                .then((response) => {
+                    this.$store.state.notification = 'Hotel created successfully'
+                    this.$store.state.show = true
+                    this.$store.state.toastClass = 'is-success'
+                    this.$store.dispatch('show')
                     this.$router.push({
                         path: '/dashboard'
                     })
@@ -43,10 +47,10 @@ export default {
     },
     async mounted() {
         const response = await instance.get('category')
-        this.categories = response.data        
+        this.categories = response.data
         const response2 = await instance.get('amenity')
         this.amenities = response2.data
-    }        
+    }
 }
 
 </script>
@@ -120,9 +124,10 @@ export default {
                 <div class="field">
                     <label class="label">Amenities</label>
                     <div class="control" v-for="amenity in this.amenities">
-                        <input class="mr-2" type="checkbox" :id="amenity.id" v-bind:value="amenity.id" v-model="checkedAmenities">
-                        <label :for="amenity.id">{{ amenity.name }}</label>
-                    </div>                    
+                        <input class="mr-2" type="checkbox" :id="amenity.id" v-bind:value="amenity.id"
+                            v-model="checkedAmenities">
+                        <label :for="amenity.id">{{ amenity.name }}</label>                        
+                    </div>
                 </div>
                 <div class="field-body">
                     <div class="field">

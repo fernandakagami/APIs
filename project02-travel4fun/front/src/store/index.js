@@ -4,7 +4,8 @@ export default createStore({
     state: {
         token: '',
         notification: '',
-        show: false
+        show: false,
+        toastClass: ''        
     },
     mutations: {
         changeToken(state, payload) {
@@ -15,6 +16,9 @@ export default createStore({
         },
         changeShow(state, payload) {
             state.show = payload
+        },
+        changeToastClass(state, payload) {
+            state.toastClass = payload
         }
     },
     actions: {

@@ -8265,3 +8265,55 @@ table th {
     transform: rotate(0deg); }
   to {
     transform: rotate(359deg); } }
+
+.input, .textarea, .select select {
+  background-color: white;
+  border-color: rgba(84, 84, 84, 0.65);
+  border-radius: 4px;
+  color: #363636; }
+  .input::-moz-placeholder, .textarea::-moz-placeholder, .select select::-moz-placeholder {
+    color: rgba(54, 54, 54, 0.3); }
+  .input::-webkit-input-placeholder, .textarea::-webkit-input-placeholder, .select select::-webkit-input-placeholder {
+    color: rgba(54, 54, 54, 0.3); }
+  .input:-moz-placeholder, .textarea:-moz-placeholder, .select select:-moz-placeholder {
+    color: rgba(54, 54, 54, 0.3); }
+  .input:-ms-input-placeholder, .textarea:-ms-input-placeholder, .select select:-ms-input-placeholder {
+    color: rgba(54, 54, 54, 0.3); }
+  .input:hover, .textarea:hover, .select select:hover, .is-hovered.input, .is-hovered.textarea, .select select.is-hovered {
+    border-color: #b5b5b5; }
+  .input:focus, .textarea:focus, .select select:focus, .is-focused.input, .is-focused.textarea, .select select.is-focused, .input:active, .textarea:active, .select select:active, .is-active.input, .is-active.textarea, .select select.is-active {
+    border-color: #485fc7;
+    box-shadow: 0 0 0 0.125em rgba(72, 95, 199, 0.25); }
+  .input[disabled], .textarea[disabled], .select select[disabled],
+  fieldset[disabled] .input,
+  fieldset[disabled] .textarea,
+  fieldset[disabled] .select select,
+  .select fieldset[disabled] select {
+    background-color: whitesmoke;
+    border-color: whitesmoke;
+    box-shadow: none;
+    color: #7a7a7a; }
+    .input[disabled]::-moz-placeholder, .textarea[disabled]::-moz-placeholder, .select select[disabled]::-moz-placeholder,
+    fieldset[disabled] .input::-moz-placeholder,
+    fieldset[disabled] .textarea::-moz-placeholder,
+    fieldset[disabled] .select select::-moz-placeholder,
+    .select fieldset[disabled] select::-moz-placeholder {
+      color: rgba(122, 122, 122, 0.3); }
+    .input[disabled]::-webkit-input-placeholder, .textarea[disabled]::-webkit-input-placeholder, .select select[disabled]::-webkit-input-placeholder,
+    fieldset[disabled] .input::-webkit-input-placeholder,
+    fieldset[disabled] .textarea::-webkit-input-placeholder,
+    fieldset[disabled] .select select::-webkit-input-placeholder,
+    .select fieldset[disabled] select::-webkit-input-placeholder {
+      color: rgba(122, 122, 122, 0.3); }
+    .input[disabled]:-moz-placeholder, .textarea[disabled]:-moz-placeholder, .select select[disabled]:-moz-placeholder,
+    fieldset[disabled] .input:-moz-placeholder,
+    fieldset[disabled] .textarea:-moz-placeholder,
+    fieldset[disabled] .select select:-moz-placeholder,
+    .select fieldset[disabled] select:-moz-placeholder {
+      color: rgba(122, 122, 122, 0.3); }
+    .input[disabled]:-ms-input-placeholder, .textarea[disabled]:-ms-input-placeholder, .select select[disabled]:-ms-input-placeholder,
+    fieldset[disabled] .input:-ms-input-placeholder,
+    fieldset[disabled] .textarea:-ms-input-placeholder,
+    fieldset[disabled] .select select:-ms-input-placeholder,
+    .select fieldset[disabled] select:-ms-input-placeholder {
+      color: rgba(122, 122, 122, 0.3); }

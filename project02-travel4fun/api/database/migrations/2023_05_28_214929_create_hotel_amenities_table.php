@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('hotel_amenity', function (Blueprint $table) {           
-            $table->foreignId('hotel_id');
+            $table->foreignId('hotel_id')->onDelete('cascade');
             $table->foreignId('amenity_id');
             $table->boolean('is_active')->default(true);
             $table->timestamps();

@@ -8,7 +8,7 @@ export default {
     components: {
         Header,
         Footer,
-        AlertModal
+        AlertModal        
     },
     data() {
         return {
@@ -17,7 +17,7 @@ export default {
             titleModal: '',
             messageModal: 'Are you sure?'
         }
-    },
+    },    
     methods: {        
         showModal() {
             this.activeClass = 'is-active'
@@ -34,6 +34,10 @@ export default {
                 })
                 .then((response) => {
                     this.activeClass = ''
+                    this.$store.state.notification = 'User updated successfully'
+                    this.$store.state.show = true
+                    this.$store.state.toastClass = 'is-success'
+                    this.$store.dispatch('show')
                 })
                 .catch((error) => console.log(error))
         },
@@ -44,6 +48,9 @@ export default {
         delete() {
             instance.delete('user/delete')
                 .then((response) => {
+                    this.$store.state.notification = 'User deleted successfully'
+                    this.$store.state.show = true
+                    this.$store.state.toastClass = 'is-danger'
                     this.$router.push({
                         path: '/owner'
                     })
@@ -62,7 +69,7 @@ export default {
     <Header></Header>
 
     <main>
-        <div class="container is-max-desktop my-4">
+        <div class="container is-max-desktop my-4">            
             <div class="columns">
                 <section class="column is-one-quarter">
                     <nav>
