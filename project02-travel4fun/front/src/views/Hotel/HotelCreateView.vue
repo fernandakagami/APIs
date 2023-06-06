@@ -1,7 +1,7 @@
 <script>
 import Header from "../../components/Owner/HeaderPage.vue";
 import Footer from "../../components/Owner/FooterPage.vue";
-import { instance } from '../../services';
+import { instance, viacep } from '../../services';
 
 export default {
     components: {
@@ -13,7 +13,11 @@ export default {
             categories: [],
             category: 'default',
             amenities: [],
-            checkedAmenities: []
+            checkedAmenities: [],
+            country_name: 'Brazil',
+            region_name: '',
+            city: '',
+            address: ''
         }
     },
     methods: {
@@ -43,6 +47,17 @@ export default {
                     })
                 })
                 .catch((error) => console.log(error))
+        },
+        findAddress(cep) {
+            viacep.get(`${cep}/json`)
+                .then((response) => {
+                    const address = response.data                    
+                    this.region_name = address.uf
+                    this.city = address.localidade
+                    this.address = address.logradouro
+                    console.log(address)
+                })
+                .catch((error) => console.log(error))
         }
     },
     async mounted() {
@@ -66,32 +81,33 @@ export default {
                 <div class="field">
                     <label class="label">Name</label>
                     <div class="control">
-                        <input class="input" type="text" v-model="name">
+                        <input class="input" type="text" v-model="name" required>
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Short Description</label>
                     <div class="control">
-                        <input class="input" type="text" v-model="short_description">
+                        <input class="input" type="text" v-model="short_description" required>
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Description</label>
                     <div class="control">
-                        <textarea class="input" v-model="description"></textarea>
+                        <textarea class="input" v-model="description" required></textarea>
                     </div>
                 </div>
                 <div class="field-body">
                     <div class="field">
                         <label class="label">Postal Code</label>
                         <div class="control">
-                            <input class="input" type="text" v-model="postal_code">
+                            <input class="input" type="text" v-model="postal_code" @blur="findAddress(postal_code)"
+                                required>
                         </div>
                     </div>
                     <div class="field">
                         <label class="label">Country Name</label>
                         <div class="control">
-                            <input class="input" type="text" v-model="country_name">
+                            <input class="input" type="text" v-model="country_name" required>
                         </div>
                     </div>
                 </div>
@@ -99,47 +115,47 @@ export default {
                     <div class="field">
                         <label class="label">Region Name</label>
                         <div class="control">
-                            <input class="input" type="text" v-model="region_name">
+                            <input class="input" type="text" v-model="region_name" required>
                         </div>
                     </div>
                     <div class="field">
                         <label class="label">City</label>
                         <div class="control">
-                            <input class="input" type="text" v-model="city">
+                            <input class="input" type="text" v-model="city" required>
                         </div>
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Address</label>
                     <div class="control">
-                        <textarea class="input" type="text" v-model="address"></textarea>
+                        <textarea class="input" type="text" v-model="address" required></textarea>
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Photos</label>
                     <div class="control">
-                        <input class="input" type="text" v-model="photos">
+                        <input class="input" type="text" v-model="photos" required>
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Amenities</label>
                     <div class="control" v-for="amenity in this.amenities">
                         <input class="mr-2" type="checkbox" :id="amenity.id" v-bind:value="amenity.id"
-                            v-model="checkedAmenities">
-                        <label :for="amenity.id">{{ amenity.name }}</label>                        
+                            v-model="checkedAmenities" >
+                        <label :for="amenity.id">{{ amenity.name }}</label>
                     </div>
                 </div>
                 <div class="field-body">
                     <div class="field">
                         <label class="label">Stars</label>
                         <div class="control">
-                            <input class="input" type="text" v-model="stars">
+                            <input class="input" type="text" v-model="stars" required>
                         </div>
                     </div>
                     <div class="field">
                         <label class="label">Category</label>
                         <div class="control">
-                            <select class="input" v-model="category">
+                            <select class="input" v-model="category" required>
                                 <option disabled value="default">Choose a item</option>
                                 <option v-for="category in this.categories" v-bind:value="category.id">
                                     {{ category.name }}

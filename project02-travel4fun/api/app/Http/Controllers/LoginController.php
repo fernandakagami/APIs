@@ -17,12 +17,17 @@ class LoginController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        if (!Hash::check($request->password, $user->password)) {
-            $response = ["message" => "Password or User not exist"];                       
+        if ($validator->fails()) {
+            return response($validator->errors(), 400);
         }
 
+        $user = User::where('email', $request->email)->first();        
+
+        if ($user == null || !Hash::check($request->password, $user->password)) {
+            $response = ["message" => "Password or User not exist"];
+            return response($response, 400);
+        }
+        
         $user->tokens()->delete();
         $token = $user->createToken('api_token')->plainTextToken;
                 

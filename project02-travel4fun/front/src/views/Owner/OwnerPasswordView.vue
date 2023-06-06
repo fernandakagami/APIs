@@ -21,16 +21,17 @@ export default {
     },
     methods: {
         updateModal() {
-            this.titleModal = 'Update Password'
+            this.titleModal = 'Change Password'
             this.activeClass = 'is-active'
         },
         update() {
-            instance.patch('http://127.0.0.1:8000/api/user/profile',
+            instance.patch('http://127.0.0.1:8000/api/user/password',
                 {
                     password: this.password,
                     password_confirmation: this.confirmationPassword,
                 })
                 .then((response) => {
+                    this.error = ''
                     this.activeClass = ''
                     this.password = ''
                     this.password_confirmation = ''
@@ -40,7 +41,12 @@ export default {
                     this.$store.dispatch('show')
                 })
                 .catch((error) => {
-                    console.log(error)
+                    this.error = error.response.data
+                    this.activeClass = ''
+                    this.$store.state.notification = 'Something went wrong'
+                    this.$store.state.show = true
+                    this.$store.state.toastClass = 'is-danger'
+                    this.$store.dispatch('show')                    
                 })
         }
     }
@@ -54,19 +60,27 @@ export default {
         <div class="container is-max-desktop my-4">
             <form class="box" @submit.prevent="updateModal">
                 <router-link to="/dashboard" class="button mb-5">Return</router-link>
-                <h1 class="has-text-centered is-size-4 has-text-weight-bold mb-5">Update Password</h1>
-                <div class=field-body>
+                <h1 class="has-text-centered is-size-4 has-text-weight-bold mb-5">Change Password</h1>
+                <div class="field-body">
                     <div class="field">
-                        <label class="label">Password</label>
-                        <div class="control">
-                            <input class="input" type="password" v-model="this.password">
-                        </div>
+                        <p class="control has-icons-left">
+                            <input class="input" :class="[error?.password?.[0] ? 'is-danger' : '']" type="password"
+                                placeholder="Password" v-model="password">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </p>
+                        <p class="help is-danger">{{ error?.password?.[0] }}</p>
                     </div>
                     <div class="field">
-                        <label class="label">Password Confirmation</label>
-                        <div class="control">
-                            <input class="input" type="password" v-model="this.password_confirmation">
-                        </div>
+                        <p class="control has-icons-left">
+                            <input class="input" :class="[error?.password_confirmation?.[0] ? 'is-danger' : '']"
+                                type="password" placeholder="Confirmation password" v-model="confirmationPassword">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </p>
+                        <p class="help is-danger">{{ error?.password_confirmation?.[0] }}</p>
                     </div>
                 </div>
                 <div class="field mt-5 is-grouped is-grouped-centered">

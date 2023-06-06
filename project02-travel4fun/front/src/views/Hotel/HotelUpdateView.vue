@@ -106,8 +106,6 @@ export default {
                 </section>
                 <section class="column">
                     <div class="box">
-
-
                         <form @submit.prevent>
                             <h1 class="has-text-centered is-size-3 has-text-weight-bold mt-3">Update Hotel</h1>
                             <div class="field">

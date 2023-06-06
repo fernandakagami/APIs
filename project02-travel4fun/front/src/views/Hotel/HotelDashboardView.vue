@@ -18,7 +18,6 @@ export default {
         this.hotel = response.data
     }
 }
-
 </script>
 
 <template>
@@ -39,7 +38,7 @@ export default {
                                     Hotel</router-link>
                             </li>
                             <li>
-                                Include a New Room
+                                <router-link :to="{ name: 'roomcreate' }">Include a New Room</router-link>                                
                             </li>
                         </ul>
                     </nav>

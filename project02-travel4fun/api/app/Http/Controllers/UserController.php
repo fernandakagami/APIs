@@ -47,11 +47,40 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',            
+        ]);
+
+        if ($validator->fails())
+        {
+            return response($validator->errors(), 400);
+        }
+
         $user = User::findOrFail(auth('sanctum')->user()->id);
 
         $user->fill($request->all());
         $user->save();
         return "User updated";
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string|min:6',
+            'password_confirmation' => 'required|string|min:6|same:password'         
+        ]);
+
+        if ($validator->fails())
+        {
+            return response($validator->errors(), 400);
+        }
+
+        $user = User::findOrFail(auth('sanctum')->user()->id);
+
+        $request['password'] = Hash::make($request['password']);
+        $user->password = $request['password'];
+        $user->save();
+        return "Password updated";
     }
 
     public function destroy()

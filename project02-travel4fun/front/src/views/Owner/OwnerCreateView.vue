@@ -77,7 +77,7 @@ export default {
           <p class="control has-icons-left">
             <input class="input" :class="[error?.password_confirmation?.[0] ? 'is-danger' : '']" type="password" placeholder="Confirmation password" v-model="confirmationPassword">
             <span class="icon is-small is-left">
-              <i class="fas fa-user-lock"></i>
+              <i class="fas fa-lock"></i>
             </span>
           </p>
           <p class="help is-danger">{{ error?.password_confirmation?.[0] }}</p>

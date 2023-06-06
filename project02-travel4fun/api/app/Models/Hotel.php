@@ -28,4 +28,9 @@ class Hotel extends Model
                     ->withPivot(['is_active'])
                     ->withTimestamps();
     }
+
+    public function room()
+    {
+        return $this->hasMany(Room::class);
+    }
 }

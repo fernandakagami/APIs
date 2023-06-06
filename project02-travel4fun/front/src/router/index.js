@@ -8,6 +8,7 @@ import OwnerDashboardView from '../views/Owner/OwnerDashboardView.vue'
 import HotelDashboardView from '../views/Hotel/HotelDashboardView.vue'
 import HotelCreateView from '../views/Hotel/HotelCreateView.vue'
 import HotelUpdateView from '../views/Hotel/HotelUpdateView.vue'
+import RoomCreateView from '../views/Room/RoomCreateView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,7 +59,13 @@ const router = createRouter({
       name: 'hotelupdate',
       component: HotelUpdateView,
       props: true
-    }
+    },
+    {
+      path: '/roomcreate',
+      name: 'roomcreate',      
+      component: RoomCreateView,
+      props: true
+    },
   ]
 })
 

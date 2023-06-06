@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AmenityController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Auth;
@@ -27,11 +28,13 @@ use Illuminate\Support\Facades\Auth;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/hotel', HotelController::class);
+    Route::resource('/room', RoomController::class);
 
     Route::post('/logout', [LoginController::class, 'logout']);
 
     Route::get('/user/profile', [UserController::class, 'show']);
     Route::patch('/user/profile', [UserController::class, 'update']);
+    Route::patch('/user/password', [UserController::class, 'updatePassword']);
     Route::delete('/user/delete', [UserController::class, 'destroy']);
 });
 
