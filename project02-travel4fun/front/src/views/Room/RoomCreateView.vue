@@ -7,10 +7,17 @@ export default {
     components: {
         Header,
         Footer
-    },
+    },  
     methods: {
         register() {
-            instance.get('room')
+            instance.post('room', {
+                name: this.name,
+                description: this.description,
+                capacity: this.capacity,
+                photos: this.photos,
+                price: this.price,
+                hotel_id: this.$route.params.id
+            })
             .then((response) => {
                 console.log(response)
             })
@@ -32,7 +39,7 @@ export default {
                     <nav class="box pt-5 has-text-centered">
                         <ul>
                             <li>
-                                <router-link class="button is-link is-light is-size-5 px-6 mb-2">
+                                <router-link :to="{ name: 'hoteldashboard', params: { id: this.$route.params.id } }" class="button is-link is-light is-size-5 px-6 mb-2">
                                     Return
                                 </router-link>
                             </li>

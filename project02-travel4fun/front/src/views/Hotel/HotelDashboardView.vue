@@ -38,7 +38,7 @@ export default {
                                     Hotel</router-link>
                             </li>
                             <li>
-                                <router-link :to="{ name: 'roomcreate' }">Include a New Room</router-link>                                
+                                <router-link :to="{ name: 'roomcreate', params: { id: hotel.id } }">Include a New Room</router-link>                                
                             </li>
                         </ul>
                     </nav>

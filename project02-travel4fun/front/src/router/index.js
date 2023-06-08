@@ -61,7 +61,7 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/roomcreate',
+      path: '/hotel/:id/roomcreate',
       name: 'roomcreate',      
       component: RoomCreateView,
       props: true

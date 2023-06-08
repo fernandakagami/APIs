@@ -54,8 +54,7 @@ export default {
                     const address = response.data                    
                     this.region_name = address.uf
                     this.city = address.localidade
-                    this.address = address.logradouro
-                    console.log(address)
+                    this.address = address.logradouro                    
                 })
                 .catch((error) => console.log(error))
         }
