@@ -28,7 +28,12 @@ use Illuminate\Support\Facades\Auth;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/hotel', HotelController::class);
-    Route::resource('/room', RoomController::class);
+
+    Route::get('/room/list/{id}', [RoomController::class, 'index']);
+    Route::post('/room', [RoomController::class, 'store']);
+    Route::get('/room/{id}', [RoomController::class, 'show']);
+    Route::patch('/room/{id}', [RoomController::class, 'update']);
+    Route::delete('/room/{id}', [RoomController::class, 'destroy']);
 
     Route::post('/logout', [LoginController::class, 'logout']);
 

@@ -1,16 +1,15 @@
 import { createStore } from "vuex";
+import { owner } from './modules/owner';
+import { hotel } from './modules/hotel';
 
 export default createStore({
-    state: {
-        token: '',
+    state: {        
         notification: '',
         show: false,
-        toastClass: ''        
+        toastClass: '',
+        hotelsList: []
     },
-    mutations: {
-        changeToken(state, payload) {
-            state.token = payload
-        },
+    mutations: {        
         changeNotification(state, payload) {
             state.notification = payload
         },
@@ -25,7 +24,17 @@ export default createStore({
         show({ commit }) {
             setTimeout(() => {
                 commit('changeShow')
-            }, 3000)            
+            }, 3000)
+        },
+        showNotification({ commit, dispatch }, { notification, cssClass }) {
+            commit('changeNotification', notification)
+            commit('changeShow', true)
+            commit('changeToastClass', cssClass)
+            dispatch('show')
         }
+    },
+    modules: {
+        owner,
+        hotel
     }
 })

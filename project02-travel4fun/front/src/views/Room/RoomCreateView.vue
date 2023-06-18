@@ -7,7 +7,7 @@ export default {
     components: {
         Header,
         Footer
-    },  
+    },
     methods: {
         register() {
             instance.post('room', {
@@ -18,12 +18,15 @@ export default {
                 price: this.price,
                 hotel_id: this.$route.params.id
             })
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+                .then((response) => {
+                    this.$store.dispatch('showNotification', { notification: 'Room created successfully', cssClass: 'is-success' })
+                    this.$router.push({
+                        name: 'hoteldashboard', params: { id: this.$route.params.id }
+                    })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
     }
 }
@@ -39,7 +42,8 @@ export default {
                     <nav class="box pt-5 has-text-centered">
                         <ul>
                             <li>
-                                <router-link :to="{ name: 'hoteldashboard', params: { id: this.$route.params.id } }" class="button is-link is-light is-size-5 px-6 mb-2">
+                                <router-link :to="{ name: 'hoteldashboard', params: { id: this.$route.params.id } }"
+                                    class="button mb-2">
                                     Return
                                 </router-link>
                             </li>

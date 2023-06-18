@@ -1,6 +1,6 @@
 <script>
-import axios from 'axios';
 import Message from '../../components/Message.vue';
+import { instance } from "../../services";
 
 export default {
   components: {
@@ -8,18 +8,9 @@ export default {
   },  
   methods: {
     logout() {
-      axios
-        .post(
-          'http://127.0.0.1:8000/api/logout',
-          { api_token: this.$store.state.token },
-          {
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              Authorization: "Bearer " + this.$store.state.token
-            }
-          })
-        .then((response) => {                    
+      instance.post('logout', { api_token: `Bearer ${localStorage.token}` })          
+        .then(() => { 
+          localStorage.token = '';
           this.$router.push({
             path: '/owner'
           })

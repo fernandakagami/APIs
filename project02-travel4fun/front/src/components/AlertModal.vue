@@ -25,8 +25,8 @@ export default {
                     <p class="mb-5">{{ message }}</p>
                     <div>
                         <button class="button is-danger mr-3" v-if="this.title == 'Delete'" @click="deleteItem">Delete</button>
-                        <button class="button is-danger mr-3" v-else @click="updateItem">Update</button>
-                        <button class="button is-info" @click="closeModal">Cancel</button>
+                        <button class="button is-info mr-3" v-else @click="updateItem">Update</button>
+                        <button class="button is-danger" @click="closeModal">Cancel</button>
                     </div>
                 </form>
             </div>

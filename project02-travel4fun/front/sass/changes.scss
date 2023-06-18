@@ -6,7 +6,10 @@ $modal: fixed;
 
 $input-border-color: rgba(84, 84, 84, 0.65);
 
+$button-border-color: rgba(84, 84, 84, 0.65);
+
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/utilities/_all.sass";
 @import "../node_modules/bulma/sass/base/_all.sass";
 @import "../node_modules/bulma/sass/form/shared.sass";
+@import "../node_modules/bulma/sass/elements/button.sass";

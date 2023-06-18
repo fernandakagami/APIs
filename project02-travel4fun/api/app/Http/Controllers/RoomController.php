@@ -7,9 +7,9 @@ use App\Models\Room;
 
 class RoomController extends Controller
 {
-    public function index(Request $request)
+    public function index(int $id)
     {                
-        return Room::where('hotel_id', $request->hotel_id)->get();
+        return Room::where('hotel_id', $id)->get();
     }
 
     public function store(Request $request)

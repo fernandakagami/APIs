@@ -2,13 +2,15 @@
 import Header from "../../components/Owner/HeaderPage.vue";
 import Footer from "../../components/Owner/FooterPage.vue";
 import AlertModal from "../../components/AlertModal.vue";
+import Loader from "../../components/Loader.vue";
 import { instance } from '../../services';
 
 export default {
     components: {
         Header,
         Footer,
-        AlertModal
+        AlertModal,
+        Loader
     },
     data() {
         return {
@@ -18,7 +20,8 @@ export default {
             activeClass: '',
             titleModal: '',
             messageModal: "Are you sure?",
-            checkedAmenities: []
+            checkedAmenities: [],
+            showLoader: true,
         }
     },
     methods: {
@@ -30,6 +33,7 @@ export default {
             this.showModal()
         },
         update() {
+            this.showLoader = true
             instance.patch(`hotel/${this.$route.params.id}`,
                 {
                     description: this.hotel.description,
@@ -45,14 +49,18 @@ export default {
                     amenities: this.checkedAmenities.filter(amenity => amenity.selected).map(amenity => amenity.id),
                     categories_id: this.hotel.categories_id,
                 })
-                .then((response) => {
+                .then((response) => {                    
                     this.activeClass = ''
-                    this.$store.state.notification = 'Hotel updated successfully'
-                    this.$store.state.show = true
-                    this.$store.state.toastClass = 'is-success'
-                    this.$store.dispatch('show')
+                    this.$store.dispatch('showNotification', { notification: 'Hotel updated successfully', cssClass: 'is-success' })
                 })
-                .catch((error) => console.log(error))
+                .catch((error) => {
+                    this.activeClass = ''
+                    this.$store.dispatch('showNotification', { notification: 'Something went wrong', cssClass: 'is-danger' })
+                })
+                .finally(() => {
+                    this.showLoader = false
+                    console.log(this.showLoader)
+                })
         },
         deleteModal() {
             this.titleModal = "Delete"
@@ -61,11 +69,15 @@ export default {
         delete() {
             instance.delete(`hotel/${this.$route.params.id}`)
                 .then((response) => {
+                    this.$store.dispatch('showNotification', { notification: 'Hotel deleted successfully', cssClass: 'is-success' })
                     this.$router.push({
                         path: '/dashboard'
                     })
                 })
-                .catch((error) => console.log(error))
+                .catch((error) => {
+                    this.activeClass = ''
+                    this.$store.dispatch('showNotification', { notification: 'Something went wrong', cssClass: 'is-danger' })
+                })
         }
     },
     async mounted() {
@@ -73,16 +85,24 @@ export default {
         this.categories = response.data
         const response2 = await instance.get('amenity')
         this.amenities = response2.data
-        const response3 = await instance.get(`hotel/${this.$route.params.id}`)
-        this.hotel = response3.data
-        console.log(this.hotel)
         this.checkedAmenities = [...this.amenities]
-        this.checkedAmenities.forEach(amenity => {
-            amenity.selected = false
-            if (this.hotel.amenities.find(a => a.id === amenity.id)) {
-                amenity.selected = true
-            }
-        });
+        instance.get(`hotel/${this.$route.params.id}`)
+            .then((response) => {
+                this.hotel = response.data
+                this.checkedAmenities.forEach(amenity => {
+                    amenity.selected = false
+                    if (this.hotel.amenities.find(a => a.id === amenity.id)) {
+                        amenity.selected = true
+                    }
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+            .finally(() => {
+                this.showLoader = false
+            })
+
     }
 }
 </script>
@@ -90,23 +110,22 @@ export default {
 <template>
     <Header></Header>
 
-    <main>
+    <main>        
         <div class="container is-max-desktop my-4">
             <div class="columns">
                 <section class="column is-one-quarter">
                     <nav class="box pt-5 has-text-centered">
-                        <router-link :to="{ name: 'hoteldashboard', params: { id: hotel.id } }"
-                            class="button is-link is-light is-size-5 px-6 mb-2">
+                        <router-link :to="{ name: 'hoteldashboard', params: { id: hotel.id } }" class="button mb-2">
                             Return
                         </router-link>
-                        <button class="button is-link is-danger is-size-5" @click="deleteModal">
+                        <button class="button is-link is-danger" @click="deleteModal">
                             Delete Hotel
                         </button>
                     </nav>
                 </section>
                 <section class="column">
                     <div class="box">
-                        <form @submit.prevent>
+                        <form @submit.prevent>                            
                             <h1 class="has-text-centered is-size-3 has-text-weight-bold mt-3">Update Hotel</h1>
                             <div class="field">
                                 <label class="label">Name</label>
@@ -203,10 +222,12 @@ export default {
                     </div>
                 </section>
             </div>
-        </div>
+        </div>        
     </main>
     <Footer></Footer>
 
+    <Loader v-if="showLoader"></Loader>
+    
     <AlertModal :activeClass="this.activeClass" :delete="deleteItem" :update="updateItem" :title="this.titleModal"
         :message="this.messageModal" />
 </template>

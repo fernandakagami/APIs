@@ -1,7 +1,6 @@
 <script>
 import Header from "../../components/Owner/HeaderPage.vue";
 import Footer from "../../components/Owner/FooterPage.vue";
-import { instance } from "../../services";
 
 export default {
     components: {
@@ -13,10 +12,17 @@ export default {
             hotels: []
         }
     },
-    async mounted() {
-        const response = await instance.get('hotel')
-        this.hotels = response.data
-    }
+    mounted() {
+        console.log(this.$store.dispatch('listHotel'))
+            .then((response) => {
+                console.log(response)
+            })
+            //    this.hotels = response.data
+            //})
+            //.catch((error) => {
+            //    console.log(error)
+            //})
+    }        
 }
 </script>
 

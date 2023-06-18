@@ -11,11 +11,17 @@ export default {
     data() {
         return {
             hotel: [],
+            room: []
         }
     },    
-    async mounted() {        
-        const response = await instance.get(`hotel/${this.$route.params.id}`)
-        this.hotel = response.data
+    async created() {        
+        const hotelResponse = await instance.get(`hotel/${this.$route.params.id}`)
+        this.hotel = hotelResponse.data
+        const roomResponse = await instance.get(`room`, {
+            hotel_id: this.$route.params.id
+        })
+        this.room= roomResponse.data
+        console.log(this.room)
     }
 }
 </script>
@@ -31,7 +37,7 @@ export default {
                         <ul>
                             <li>
                                 <router-link to="/dashboard"
-                                    class="button is-link is-light is-size-5 mb-2">Return</router-link>
+                                    class="button mb-2">Return</router-link>
                             </li>
                             <li>
                                 <router-link :to="{ name: 'hotelupdate', params: { id: hotel.id } }">Update

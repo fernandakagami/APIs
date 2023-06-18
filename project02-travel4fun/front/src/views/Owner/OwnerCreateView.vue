@@ -1,35 +1,28 @@
 <script>
-import { instance } from '../../services';
-
 export default {
   data() {
     return {
-      error: []      
+      error: []
     }
   },
   methods: {
     register() {
-      instance.post('user',
-        {
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          password_confirmation: this.confirmationPassword,
-          role: "owner"
-        }
-      )
-        .then((response) => {          
-          this.$store.state.notification = 'User created successfully'
-          this.$store.state.show = true
-          this.$store.state.toastClass = 'is-success'
+      this.$store.dispatch('registerOwner', {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        confirmationPassword: this.confirmationPassword
+      })
+      .then(() => {
+          this.$store.dispatch('showNotification', { notification: 'User created successfully', cssClass: 'is-success' })
           this.$router.push({
             path: '/owner'
           })
-        })
-        .catch((response) => {          
-          this.error = []
-          this.error = response.response.data
-        })
+        })              
+      .catch((response) => {          
+        this.error = []
+        this.error = response.response.data
+      })
     }
   },
 }
@@ -47,7 +40,8 @@ export default {
       <h1 class="has-text-centered is-size-4 has-text-weight-bold mb-3">Owner Register</h1>
       <div class="field">
         <p class="control has-icons-left">
-          <input class="input" :class="[error?.name?.[0] ? 'is-danger' : '']" type="text" placeholder="Name" v-model="name">
+          <input class="input" :class="[error?.name?.[0] ? 'is-danger' : '']" type="text" placeholder="Name"
+            v-model="name">
           <span class="icon is-small is-left">
             <i class="fas fa-user"></i>
           </span>
@@ -56,7 +50,8 @@ export default {
       </div>
       <div class="field">
         <p class="control has-icons-left">
-          <input class="input" :class="[error?.email?.[0] ? 'is-danger' : '']" type="email" placeholder="Email" v-model="email">
+          <input class="input" :class="[error?.email?.[0] ? 'is-danger' : '']" type="email" placeholder="Email"
+            v-model="email">
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>
@@ -66,7 +61,8 @@ export default {
       <div class="field-body">
         <div class="field">
           <p class="control has-icons-left">
-            <input class="input" :class="[error?.password?.[0] ? 'is-danger' : '']" type="password" placeholder="Password" v-model="password">
+            <input class="input" :class="[error?.password?.[0] ? 'is-danger' : '']" type="password" placeholder="Password"
+              v-model="password">
             <span class="icon is-small is-left">
               <i class="fas fa-lock"></i>
             </span>
@@ -75,13 +71,14 @@ export default {
         </div>
         <div class="field">
           <p class="control has-icons-left">
-            <input class="input" :class="[error?.password_confirmation?.[0] ? 'is-danger' : '']" type="password" placeholder="Confirmation password" v-model="confirmationPassword">
+            <input class="input" :class="[error?.password_confirmation?.[0] ? 'is-danger' : '']" type="password"
+              placeholder="Confirmation password" v-model="confirmationPassword">
             <span class="icon is-small is-left">
               <i class="fas fa-lock"></i>
             </span>
           </p>
           <p class="help is-danger">{{ error?.password_confirmation?.[0] }}</p>
-        </div>        
+        </div>
       </div>
       <div class="field mt-5 is-grouped is-grouped-centered">
         <div class="control">
@@ -99,5 +96,4 @@ header {
 
 header img {
   width: 100px;
-}
-</style>
+}</style>

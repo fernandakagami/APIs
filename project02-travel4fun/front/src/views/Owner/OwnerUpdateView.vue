@@ -27,27 +27,18 @@ export default {
             this.titleModal = "Update Owner"
             this.showModal()
         },
-        update() {
-            instance.patch(`user/profile`,
-                {
-                    name: this.user.name,                    
-                })
-                .then((response) => {
+        update() {            
+            this.$store.dispatch('updateOwner', {
+                name: this.user.name,               
+            })
+                .then(() => {
                     this.error = ''
                     this.activeClass = ''
-                    this.$store.state.notification = 'User updated successfully'
-                    this.$store.state.show = true
-                    this.$store.state.toastClass = 'is-success'
-                    this.$store.dispatch('show')
+                    this.$store.dispatch('showNotification', { notification: 'User updated successfully', cssClass: 'is-success' })
                 })
                 .catch((error) => {
-                    this.error = error.response.data
                     this.activeClass = ''
-                    this.$store.state.notification = 'Something went wrong'
-                    this.$store.state.show = true
-                    this.$store.state.toastClass = 'is-danger'
-                    this.$store.dispatch('show')
-                    console.log(error.response.data)
+                    this.$store.dispatch('showNotification', { notification: 'Something went wrong', cssClass: 'is-danger' })
                 })
         },
         deleteModal() {
@@ -57,18 +48,17 @@ export default {
         delete() {
             instance.delete('user/delete')
                 .then((response) => {
-                    this.$store.state.notification = 'User deleted successfully'
-                    this.$store.state.show = true
-                    this.$store.state.toastClass = 'is-danger'
                     this.$router.push({
                         path: '/owner'
                     })
                 })
-                .catch((error) => console.log(error)
-                )
+                .catch((error) => {
+                    this.activeClass = ''
+                    this.$store.dispatch('showNotification', { notification: 'Something went wrong', cssClass: 'is-danger' })
+                })
         }
     },
-    async mounted() {
+    async created() {
         const response = await instance.get('user/profile')
         this.user = response.data
     }
@@ -85,6 +75,9 @@ export default {
                     <nav>
                         <ul class="box pt-5">
                             <li class="has-text-centered mb-4">
+                                <router-link to="/dashboard" class="button has-text-centered mb-2">Return</router-link>
+                            </li>
+                            <li class="has-text-centered mb-4">
                                 <router-link to="/ownerpassword" class="button is-info is-link">Change
                                     Password</router-link>
                             </li>
@@ -96,7 +89,6 @@ export default {
                 </section>
                 <section class="column">
                     <form class="box" @submit.prevent="updateModal">
-                        <router-link to="/dashboard" class="button mb-5">Return</router-link>
                         <h1 class="has-text-centered is-size-4 has-text-weight-bold mb-5">Update Owner</h1>
                         <div class="field">
                             <p class="control has-icons-left">
@@ -114,7 +106,7 @@ export default {
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-envelope"></i>
                                 </span>
-                            </p>                            
+                            </p>
                         </div>
                         <div class="field mt-5 is-grouped is-grouped-centered">
                             <div class="control">
@@ -127,7 +119,6 @@ export default {
 
             <AlertModal :activeClass="activeClass" :delete="deleteItem" :update="updateItem" :title="titleModal"
                 :message="messageModal" />
-
         </div>
     </main>
 

@@ -20,16 +20,15 @@ export default {
         }
       )
         .then((response) => {
-          this.$store.commit("changeToken", response.data.api_token)
-          instance.defaults.headers.common['Authorization'] = `Bearer ${this.$store.state.token}`
+          localStorage.token = response.data.api_token;
+          instance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`;          
           this.$router.push({
             path: '/dashboard'
           })
         })
         .catch((error) => {
           this.error = []
-          this.error = error.response.data
-          console.log(error.response.data)
+          this.error = error.response.data           
         })
     }
   }
@@ -40,7 +39,7 @@ export default {
   <div class="modal-background"></div>
   <div class="modal-content">
     <div class="box px-6">
-      <h2 class="my-4 has-text-centered is-size-3">Login</h2>
+      <h2 class="my-4 has-text-centered is-size-3">Login {{ this.$store.state.token }}</h2>
       <form @submit.prevent="login">
         <div class="field">
           <p class="control has-icons-left">

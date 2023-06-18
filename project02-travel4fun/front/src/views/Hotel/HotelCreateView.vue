@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         register() {
-            instance.post('http://127.0.0.1:8000/api/hotel',
+            instance.post('hotel',
                 {
                     description: this.description,
                     postal_code: this.postal_code,
@@ -37,26 +37,27 @@ export default {
                     amenities: this.checkedAmenities,
                     categories_id: this.category,
                 })
-                .then((response) => {
-                    this.$store.state.notification = 'Hotel created successfully'
-                    this.$store.state.show = true
-                    this.$store.state.toastClass = 'is-success'
-                    this.$store.dispatch('show')
+                .then(() => {    
+                    this.$store.dispatch('showNotification', { notification: 'Hotel created successfully', cssClass: 'is-sucess' })                                    
                     this.$router.push({
                         path: '/dashboard'
                     })
                 })
-                .catch((error) => console.log(error))
+                .catch(() => {
+                    this.$store.dispatch('showNotification', { notification: 'Something went wrong', cssClass: 'is-danger' })
+                })
         },
         findAddress(cep) {
             viacep.get(`${cep}/json`)
                 .then((response) => {
-                    const address = response.data                    
+                    const address = response.data
                     this.region_name = address.uf
                     this.city = address.localidade
-                    this.address = address.logradouro                    
+                    this.address = address.logradouro
                 })
-                .catch((error) => console.log(error))
+                .catch((error) => {
+                    this.$store.dispatch('showNotification', { notification: 'Something went wrong', cssClass: 'is-danger' })
+                })
         }
     },
     async mounted() {
@@ -140,7 +141,7 @@ export default {
                     <label class="label">Amenities</label>
                     <div class="control" v-for="amenity in this.amenities">
                         <input class="mr-2" type="checkbox" :id="amenity.id" v-bind:value="amenity.id"
-                            v-model="checkedAmenities" >
+                            v-model="checkedAmenities">
                         <label :for="amenity.id">{{ amenity.name }}</label>
                     </div>
                 </div>
