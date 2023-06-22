@@ -22,23 +22,22 @@ export default {
     },
     methods: {
         register() {
-            instance.post('hotel',
-                {
-                    description: this.description,
-                    postal_code: this.postal_code,
-                    country_name: this.country_name,
-                    region_name: this.region_name,
-                    city: this.city,
-                    address: this.address,
-                    name: this.name,
-                    short_description: this.short_description,
-                    photos: this.photos,
-                    stars: this.stars,
-                    amenities: this.checkedAmenities,
-                    categories_id: this.category,
-                })
-                .then(() => {    
-                    this.$store.dispatch('showNotification', { notification: 'Hotel created successfully', cssClass: 'is-sucess' })                                    
+            this.$store.dispatch('registerHotel', {
+                description: this.description,
+                postalCode: this.postal_code,
+                countryName: this.country_name,
+                regionName: this.region_name,
+                city: this.city,
+                address: this.address,
+                name: this.name,
+                shortDescription: this.short_description,
+                photos: this.photos,
+                stars: this.stars,
+                amecheckedAmenities: this.checkedAmenities,
+                category: this.category,
+            })
+                .then(() => {
+                    this.$store.dispatch('showNotification', { notification: 'Hotel created successfully', cssClass: 'is-sucess' })
                     this.$router.push({
                         path: '/dashboard'
                     })
@@ -67,7 +66,6 @@ export default {
         this.amenities = response2.data
     }
 }
-
 </script>
 
 <template>

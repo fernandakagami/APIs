@@ -6,8 +6,7 @@ export default createStore({
     state: {        
         notification: '',
         show: false,
-        toastClass: '',
-        hotelsList: []
+        toastClass: '',        
     },
     mutations: {        
         changeNotification(state, payload) {

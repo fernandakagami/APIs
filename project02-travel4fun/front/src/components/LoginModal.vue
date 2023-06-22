@@ -21,7 +21,7 @@ export default {
       )
         .then((response) => {
           localStorage.token = response.data.api_token;
-          instance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`;          
+          instance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`;
           this.$router.push({
             path: '/dashboard'
           })

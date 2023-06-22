@@ -11,18 +11,15 @@ export default {
     data() {
         return {
             hotel: [],
-            room: []
+            rooms: []
         }
-    },    
-    async created() {        
+    },
+    async created() {
         const hotelResponse = await instance.get(`hotel/${this.$route.params.id}`)
         this.hotel = hotelResponse.data
-        const roomResponse = await instance.get(`room`, {
-            hotel_id: this.$route.params.id
-        })
-        this.room= roomResponse.data
-        console.log(this.room)
-    }
+        const roomResponse = await instance.get(`/room/list/${this.$route.params.id}`)
+        this.rooms = roomResponse.data
+    },
 }
 </script>
 
@@ -36,15 +33,15 @@ export default {
                     <nav class="box pt-5 has-text-centered">
                         <ul>
                             <li>
-                                <router-link to="/dashboard"
-                                    class="button mb-2">Return</router-link>
+                                <router-link to="/dashboard" class="button mb-2">Return</router-link>
                             </li>
                             <li>
                                 <router-link :to="{ name: 'hotelupdate', params: { id: hotel.id } }">Update
                                     Hotel</router-link>
                             </li>
                             <li>
-                                <router-link :to="{ name: 'roomcreate', params: { id: hotel.id } }">Include a New Room</router-link>                                
+                                <router-link :to="{ name: 'roomcreate', params: { id: hotel.id } }">Include a New
+                                    Room</router-link>
                             </li>
                         </ul>
                     </nav>
@@ -63,10 +60,26 @@ export default {
                         </div>
                         <img class="hotel-image mb-2" :style="{ backgroundImage: `url(${hotel.photos})` }">
                         <p class="description has-text-justified mb-4">{{ hotel.description }}</p>
-                        <h4 class="has-text-weight-semibold is-size-6 mb-1">Amenities</h4>
-                        <ul v-for="amenity in this.hotel.amenities">
-                            <li class="amenities">{{ amenity.name }}</li>
+                        <h4 class="has-text-weight-semibold is-size-6">Main Amenities</h4>
+                        <ul class="mb-5">
+                            <li v-for="amenity in hotel.amenities" class="amenities">{{ amenity.name }}</li>
                         </ul>
+                        <table class="table is-fullwidth is-hoverable">
+                            <thead>
+                                <tr>
+                                    <th>Type of Room</th>
+                                    <th>Capacity</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="room in rooms" style="cursor: pointer;">
+                                    <td>{{ room.name }}</td>
+                                    <td>{{ room.capacity }}</td>
+                                    <td>{{ room.price }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </section>
             </div>

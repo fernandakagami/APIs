@@ -12,16 +12,11 @@ export default {
             hotels: []
         }
     },
-    mounted() {
-        console.log(this.$store.dispatch('listHotel'))
-            .then((response) => {
-                console.log(response)
+    created() {
+        this.$store.dispatch('listHotel')
+            .then((response) => {                
+                this.hotels = response.data
             })
-            //    this.hotels = response.data
-            //})
-            //.catch((error) => {
-            //    console.log(error)
-            //})
     }        
 }
 </script>
