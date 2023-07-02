@@ -1,13 +1,9 @@
 <script>
-import Header from "../../components/Owner/HeaderPage.vue";
-import Footer from "../../components/Owner/FooterPage.vue";
 import AlertModal from "../../components/AlertModal.vue";
-import { instance } from '../../services';
+import { useApi } from '../../services';
 
 export default {
     components: {
-        Header,
-        Footer,
         AlertModal
     },
     data() {
@@ -27,9 +23,9 @@ export default {
             this.titleModal = "Update Owner"
             this.showModal()
         },
-        update() {            
+        update() {
             this.$store.dispatch('updateOwner', {
-                name: this.user.name,               
+                name: this.user.name,
             })
                 .then(() => {
                     this.error = ''
@@ -46,28 +42,28 @@ export default {
             this.showModal()
         },
         delete() {
-            instance.delete('user/delete')
-                .then((response) => {
+            this.$store.dispatch('deleteOwner', {
+            })
+                .then(() => {
                     this.$router.push({
                         path: '/owner'
                     })
                 })
-                .catch((error) => {
+                .catch(() => {
                     this.activeClass = ''
                     this.$store.dispatch('showNotification', { notification: 'Something went wrong', cssClass: 'is-danger' })
                 })
+
         }
     },
     async created() {
-        const response = await instance.get('user/profile')
+        const response = await useApi().get('user/profile')
         this.user = response.data
     }
 }
 </script>
 
 <template>
-    <Header></Header>
-
     <main>
         <div class="container is-max-desktop my-4">
             <div class="columns">
@@ -121,6 +117,4 @@ export default {
                 :message="messageModal" />
         </div>
     </main>
-
-    <Footer></Footer>
 </template>

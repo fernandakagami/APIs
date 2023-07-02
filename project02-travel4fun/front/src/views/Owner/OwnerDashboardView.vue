@@ -1,19 +1,12 @@
 <script>
-import Header from "../../components/Owner/HeaderPage.vue";
-import Footer from "../../components/Owner/FooterPage.vue";
-
 export default {
-    components: {
-        Header,
-        Footer
-    },
     data() {
         return {
             hotels: []
         }
     },
-    created() {
-        this.$store.dispatch('listHotel')
+    created() {        
+        this.$store.dispatch('listHotel')        
             .then((response) => {                
                 this.hotels = response.data
             })
@@ -22,8 +15,6 @@ export default {
 </script>
 
 <template>
-    <Header></Header>
-
     <main>
         <div class="container is-max-desktop my-4">
             <div class="columns">
@@ -69,8 +60,6 @@ export default {
             </div>
         </div>
     </main>
-
-    <Footer></Footer>
 </template>
 
 <style scoped>

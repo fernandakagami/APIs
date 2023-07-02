@@ -143,7 +143,7 @@ em {
 }
 
 .section-container-two {
-    width: 80%;
+    width: 80%;    
 }
 
 .section-container-two-title {
@@ -183,7 +183,11 @@ em {
 }
 
 .section-two {
-    height: 50%;
+    height: calc(50vh - 145px);
+}
+
+.section-two .container {
+    height: 100%;
 }
 
 .button-contact-us {

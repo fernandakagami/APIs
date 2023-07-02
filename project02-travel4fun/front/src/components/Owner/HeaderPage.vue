@@ -1,16 +1,15 @@
 <script>
 import Message from '../../components/Message.vue';
-import { instance } from "../../services";
+import { useApi } from "../../services";
 
 export default {
   components: {
     Message
   },  
   methods: {
-    logout() {
-      instance.post('logout', { api_token: `Bearer ${localStorage.token}` })          
-        .then(() => { 
-          localStorage.token = '';
+    logout() {      
+      useApi().post('logout')
+        .then(() => {          
           this.$router.push({
             path: '/owner'
           })

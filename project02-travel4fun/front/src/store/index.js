@@ -3,10 +3,11 @@ import { owner } from './modules/owner';
 import { hotel } from './modules/hotel';
 
 export default createStore({
-    state: {        
+    state: {                
         notification: '',
         show: false,
-        toastClass: '',        
+        toastClass: '',
+        currentHotel: []
     },
     mutations: {        
         changeNotification(state, payload) {
@@ -17,6 +18,9 @@ export default createStore({
         },
         changeToastClass(state, payload) {
             state.toastClass = payload
+        },
+        changeCurrentHotel(state, payload) {
+            state.currentHotel = payload
         }
     },
     actions: {

@@ -1,16 +1,10 @@
 <script>
-import Header from "../../components/Owner/HeaderPage.vue";
-import Footer from "../../components/Owner/FooterPage.vue";
-import { instance } from '../../services';
+import { useApi } from '../../../services';
 
-export default {
-    components: {
-        Header,
-        Footer
-    },
+export default {   
     methods: {
         register() {
-            instance.post('room', {
+            useApi().post('room', {
                 name: this.name,
                 description: this.description,
                 capacity: this.capacity,
@@ -33,8 +27,6 @@ export default {
 </script>
 
 <template>
-    <Header></Header>
-
     <main>
         <div class="container is-max-desktop my-4">
             <div class="columns">
@@ -97,6 +89,4 @@ export default {
             </div>
         </div>
     </main>
-
-    <Footer></Footer>
 </template>

@@ -1,12 +1,8 @@
 <script>
-import Header from '../../components/Owner/HeaderPage.vue'
-import Footer from '../../components/Owner/FooterPage.vue'
 import AlertModal from '../../components/AlertModal.vue'
 
 export default {
     components: {
-        Header,
-        Footer,
         AlertModal
     },
     data() {
@@ -45,8 +41,6 @@ export default {
 </script>
 
 <template>
-    <Header></Header>
-
     <main>
         <div class="container is-max-desktop my-4">
             <form class="box" @submit.prevent="updateModal">
@@ -82,9 +76,6 @@ export default {
             </form>
         </div>
     </main>
-
-    <Footer></Footer>
-
     <AlertModal :activeClass="this.activeClass" :update="updateItem" :title="this.titleModal" :message="this.messageModal">
     </AlertModal>
 </template>

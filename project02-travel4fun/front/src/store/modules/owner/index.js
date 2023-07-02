@@ -1,4 +1,4 @@
-import { instance } from '../../../services';
+import { instance, useApi } from '../../../services';
 
 export const owner = {
     actions: {        
@@ -14,17 +14,20 @@ export const owner = {
             )
         },
         updateOwner(commit, { name }) {
-            instance.patch(`user/profile`,
+            useApi().patch(`user/profile`,
                 {
                     name: name,
                 })
         },
         updatePassword(commit, { password, confirmationPassword }) {
-            instance.patch('http://127.0.0.1:8000/api/user/password',
+            useApi().patch('http://127.0.0.1:8000/api/user/password',
                 {
                     password: password,
                     password_confirmation: confirmationPassword,
                 })
         },
+        deleteOwner(commit) {
+            useApi().delete('user/delete')                
+        }
     }
 }

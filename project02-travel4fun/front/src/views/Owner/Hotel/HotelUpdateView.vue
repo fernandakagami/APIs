@@ -1,14 +1,10 @@
 <script>
-import Header from "../../components/Owner/HeaderPage.vue";
-import Footer from "../../components/Owner/FooterPage.vue";
-import AlertModal from "../../components/AlertModal.vue";
-import Loader from "../../components/Loader.vue";
-import { instance } from '../../services';
+import AlertModal from "../../../components/AlertModal.vue";
+import Loader from "../../../components/Loader.vue";
+import { instance, useApi } from '../../../services';
 
 export default {
     components: {
-        Header,
-        Footer,
         AlertModal,
         Loader
     },
@@ -34,7 +30,7 @@ export default {
         },
         update() {
             this.showLoader = true
-            instance.patch(`hotel/${this.$route.params.id}`,
+            useApi().patch(`hotel/${this.$route.params.id}`,
                 {
                     description: this.hotel.description,
                     postal_code: this.hotel.postal_code,
@@ -67,7 +63,7 @@ export default {
             this.showModal()
         },
         delete() {
-            instance.delete(`hotel/${this.$route.params.id}`)
+            useApi().delete(`hotel/${this.$route.params.id}`)
                 .then((response) => {
                     this.$store.dispatch('showNotification', { notification: 'Hotel deleted successfully', cssClass: 'is-success' })
                     this.$router.push({
@@ -80,13 +76,13 @@ export default {
                 })
         }
     },
-    async mounted() {
+    async created() {
         const response = await instance.get('category')
         this.categories = response.data
         const response2 = await instance.get('amenity')
         this.amenities = response2.data
         this.checkedAmenities = [...this.amenities]
-        instance.get(`hotel/${this.$route.params.id}`)
+        useApi().get(`hotel/${this.$route.params.id}`)
             .then((response) => {
                 this.hotel = response.data
                 this.checkedAmenities.forEach(amenity => {
@@ -108,8 +104,6 @@ export default {
 </script>
 
 <template>
-    <Header></Header>
-
     <main>        
         <div class="container is-max-desktop my-4">
             <div class="columns">
@@ -224,8 +218,7 @@ export default {
             </div>
         </div>        
     </main>
-    <Footer></Footer>
-
+    
     <Loader v-if="showLoader"></Loader>
     
     <AlertModal :activeClass="this.activeClass" :delete="deleteItem" :update="updateItem" :title="this.titleModal"

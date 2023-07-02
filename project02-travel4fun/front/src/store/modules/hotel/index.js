@@ -1,4 +1,4 @@
-import { instance } from '../../../services';
+import { useApi } from '../../../services';
 
 export const hotel = {
     state: {
@@ -11,10 +11,10 @@ export const hotel = {
     },
     actions: {
         listHotel(commit) {
-            return instance.get('hotel')   
+            return useApi().get('hotel')
         },
         registerHotel(commit, { description, postalCode, countryName, regionName, city, address, name, shortDescription, photos, stars, checkedAmenities,category }) {
-            instance.post('hotel',
+            useApi().post('hotel',
                 {
                     description: description,
                     postal_code: postalCode,
@@ -30,6 +30,6 @@ export const hotel = {
                     categories_id: category,
                 }
             )
-        },        
+        },      
     }
 }

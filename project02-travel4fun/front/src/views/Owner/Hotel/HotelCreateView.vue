@@ -1,13 +1,7 @@
 <script>
-import Header from "../../components/Owner/HeaderPage.vue";
-import Footer from "../../components/Owner/FooterPage.vue";
-import { instance, viacep } from '../../services';
+import { instance, viacep } from '../../../services';
 
 export default {
-    components: {
-        Header,
-        Footer
-    },
     data() {
         return {
             categories: [],
@@ -69,8 +63,6 @@ export default {
 </script>
 
 <template>
-    <Header></Header>
-
     <main>
         <div class="container is-max-desktop">
             <router-link to="/dashboard" class="button mt-5">Return</router-link>
@@ -171,8 +163,6 @@ export default {
             </form>
         </div>
     </main>
-
-    <Footer></Footer>
 </template>
 
 <style scoped></style>

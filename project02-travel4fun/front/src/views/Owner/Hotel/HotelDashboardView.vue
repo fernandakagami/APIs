@@ -1,31 +1,24 @@
 <script>
-import Header from "../../components/Owner/HeaderPage.vue";
-import Footer from "../../components/Owner/FooterPage.vue";
-import { instance } from '../../services';
+import { useApi } from '../../../services';
 
 export default {
-    components: {
-        Header,
-        Footer,
-    },
     data() {
-        return {
+        return {   
             hotel: [],
             rooms: []
         }
     },
     async created() {
-        const hotelResponse = await instance.get(`hotel/${this.$route.params.id}`)
-        this.hotel = hotelResponse.data
-        const roomResponse = await instance.get(`/room/list/${this.$route.params.id}`)
+        const hotelResponse = await useApi().get(`hotel/${this.$route.params.id}`)
+        this.$store.state.currentHotel = hotelResponse.data
+        this.hotel = this.$store.state.currentHotel
+        const roomResponse = await useApi().get(`/room/list/${this.$route.params.id}`)
         this.rooms = roomResponse.data
     },
 }
 </script>
 
 <template>
-    <Header></Header>
-
     <main>
         <div class="container is-max-desktop my-4">
             <div class="columns">
@@ -52,7 +45,7 @@ export default {
                             <div>
                                 <h2 class="is-size-3 has-text-weight-bold">{{ hotel.name }}</h2>
                                 <p class="is-size-7 is-flex is-align-items-center">
-                                    <img class="pin-image" src="../../assets/pin.png">
+                                    <img class="pin-image" src="@/assets/pin.png">
                                     {{ hotel.address }}, {{ hotel.city }}, {{ hotel.region_name }}, {{ hotel.country_name }}
                                 </p>
                             </div>
@@ -85,8 +78,6 @@ export default {
             </div>
         </div>
     </main>
-    <Footer></Footer>
-
     <AlertModal :activeClass="this.activeClass" :delete="deleteItem" :update="updateItem" :title="this.titleModal"
         :message="this.messageModal" />
 </template>
