@@ -1,7 +1,7 @@
 <script>
 import AlertModal from "../../../components/AlertModal.vue";
 import Loader from "../../../components/Loader.vue";
-import { instance, useApi } from '../../../services';
+import { instance, useApi, viacep } from '../../../services';
 
 export default {
     components: {
@@ -21,6 +21,18 @@ export default {
         }
     },
     methods: {
+        findAddress(cep) {            
+            viacep.get(`${cep}/json`)
+                .then((response) => {                    
+                    const address = response.data
+                    this.hotel.region_name = address.uf
+                    this.hotel.city = address.localidade
+                    this.hotel.address = address.logradouro
+                })
+                .catch((error) => {
+                    this.$store.dispatch('showNotification', { notification: 'Something went wrong', cssClass: 'is-danger' })
+                })
+        },
         showModal() {
             this.activeClass = 'is-active'
         },
@@ -30,20 +42,20 @@ export default {
         },
         update() {
             this.showLoader = true
-            useApi().patch(`hotel/${this.$route.params.id}`,
+            this.$store.dispatch('updateHotel',
                 {
                     description: this.hotel.description,
-                    postal_code: this.hotel.postal_code,
-                    country_name: this.hotel.country_name,
-                    region_name: this.hotel.region_name,
+                    postalCode: this.hotel.postal_code,
+                    countryName: this.hotel.country_name,
+                    regionName: this.hotel.region_name,
                     city: this.hotel.city,
                     address: this.hotel.address,
                     name: this.hotel.name,
-                    short_description: this.hotel.short_description,
+                    shortDescription: this.hotel.short_description,
                     photos: this.hotel.photos,
                     stars: this.hotel.stars,
                     amenities: this.checkedAmenities.filter(amenity => amenity.selected).map(amenity => amenity.id),
-                    categories_id: this.hotel.categories_id,
+                    category: this.hotel.categories_id,
                 })
                 .then((response) => {                    
                     this.activeClass = ''
@@ -54,8 +66,7 @@ export default {
                     this.$store.dispatch('showNotification', { notification: 'Something went wrong', cssClass: 'is-danger' })
                 })
                 .finally(() => {
-                    this.showLoader = false
-                    console.log(this.showLoader)
+                    this.showLoader = false                    
                 })
         },
         deleteModal() {
@@ -84,6 +95,7 @@ export default {
         this.checkedAmenities = [...this.amenities]
         useApi().get(`hotel/${this.$route.params.id}`)
             .then((response) => {
+                this.$store.state.hotel.currentHotel = response.data
                 this.hotel = response.data
                 this.checkedAmenities.forEach(amenity => {
                     amenity.selected = false
@@ -143,7 +155,7 @@ export default {
                                 <div class="field">
                                     <label class="label">Postal Code</label>
                                     <div class="control">
-                                        <input class="input" type="text" v-model="this.hotel.postal_code">
+                                        <input class="input" type="text" v-model="this.hotel.postal_code" @blur="findAddress(this.hotel.postal_code)">
                                     </div>
                                 </div>
                                 <div class="field">

@@ -6,7 +6,7 @@ export default {
         }
     },
     created() {        
-        this.$store.dispatch('listHotel')        
+        this.$store.dispatch('listHotel')
             .then((response) => {                
                 this.hotels = response.data
             })

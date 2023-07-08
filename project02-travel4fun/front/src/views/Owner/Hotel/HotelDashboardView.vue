@@ -10,8 +10,7 @@ export default {
     },
     async created() {
         const hotelResponse = await useApi().get(`hotel/${this.$route.params.id}`)
-        this.$store.state.currentHotel = hotelResponse.data
-        this.hotel = this.$store.state.currentHotel
+        this.hotel = hotelResponse.data        
         const roomResponse = await useApi().get(`/room/list/${this.$route.params.id}`)
         this.rooms = roomResponse.data
     },

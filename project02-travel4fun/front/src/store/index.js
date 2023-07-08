@@ -6,8 +6,7 @@ export default createStore({
     state: {                
         notification: '',
         show: false,
-        toastClass: '',
-        currentHotel: []
+        toastClass: ''
     },
     mutations: {        
         changeNotification(state, payload) {
@@ -18,10 +17,7 @@ export default createStore({
         },
         changeToastClass(state, payload) {
             state.toastClass = payload
-        },
-        changeCurrentHotel(state, payload) {
-            state.currentHotel = payload
-        }
+        },        
     },
     actions: {
         show({ commit }) {
