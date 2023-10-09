@@ -5,11 +5,8 @@ export default {
             hotels: []
         }
     },
-    created() {        
-        this.$store.dispatch('listHotel')
-            .then((response) => {                
-                this.hotels = response.data
-            })
+    async created() {        
+        this.hotels = await this.$store.dispatch('listHotel')
     }        
 }
 </script>

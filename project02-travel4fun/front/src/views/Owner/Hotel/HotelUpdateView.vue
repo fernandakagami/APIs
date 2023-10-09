@@ -40,9 +40,9 @@ export default {
             this.titleModal = "Update Hotel"
             this.showModal()
         },
-        update() {
+        async update() {
             this.showLoader = true
-            this.$store.dispatch('updateHotel',
+            await this.$store.dispatch('updateHotel',
                 {
                     description: this.hotel.description,
                     postalCode: this.hotel.postal_code,
@@ -57,17 +57,8 @@ export default {
                     amenities: this.checkedAmenities.filter(amenity => amenity.selected).map(amenity => amenity.id),
                     category: this.hotel.categories_id,
                 })
-                .then((response) => {                    
-                    this.activeClass = ''
-                    this.$store.dispatch('showNotification', { notification: 'Hotel updated successfully', cssClass: 'is-success' })
-                })
-                .catch((error) => {
-                    this.activeClass = ''
-                    this.$store.dispatch('showNotification', { notification: 'Something went wrong', cssClass: 'is-danger' })
-                })
-                .finally(() => {
-                    this.showLoader = false                    
-                })
+            this.activeClass = ''
+            this.showLoader = false
         },
         deleteModal() {
             this.titleModal = "Delete"

@@ -1,3 +1,3 @@
 export const getters = {
-    currentHotel: (state) => state.currentHotel,
+    currentHotel: (state) => state.currentHotel,    
 };

@@ -29,16 +29,7 @@ export default {
                 stars: this.stars,
                 amecheckedAmenities: this.checkedAmenities,
                 category: this.category,
-            })
-                .then(() => {
-                    this.$store.dispatch('showNotification', { notification: 'Hotel created successfully', cssClass: 'is-sucess' })
-                    this.$router.push({
-                        path: '/dashboard'
-                    })
-                })
-                .catch(() => {
-                    this.$store.dispatch('showNotification', { notification: 'Something went wrong', cssClass: 'is-danger' })
-                })
+            })                
         },
         findAddress(cep) {
             viacep.get(`${cep}/json`)
